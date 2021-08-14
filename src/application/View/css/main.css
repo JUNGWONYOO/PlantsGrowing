@@ -2,6 +2,41 @@
     -fx-background-image: url("background_2.png");
     -fx-background-repeat: stretch;   
     -fx-background-size: 1000 600;
-    -fx-background-position: center center;
-     
+    -fx-background-position: center center;    
+}
+/*식물 관련 버튼*/
+#btn_sun{
+    -fx-background-image: url("sun.png");
+}
+#btn_water{
+    -fx-background-image: url("water.png");
+}
+#btn_heart{
+    -fx-background-image: url("heart.png");
+}
+#btn_snail{
+    -fx-background-image: url("snail.png");
+}
+/*노래 관련 및 도움말 버튼*/
+#btn_play{
+    -fx-background-image: url("play.png");
+    -fx-background-color: transparent;
+}
+#btn_pause{
+    -fx-background-image: url("pause.png");
+    -fx-background-color: transparent;
+}
+#btn_help{
+    -fx-background-image: url("help.png");
+    -fx-background-color: transparent;
+}
+
+/*날씨 정보 및 뒤로가기 버튼 */
+#btn_weather{
+    -fx-background-image: url("weather.png");
+    -fx-background-color: transparent;
+}
+#btn_previouspage{
+    -fx-background-image: url("previouspage.png");
+    -fx-background-color: transparent;
 }
