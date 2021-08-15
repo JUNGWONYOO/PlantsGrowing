@@ -216,6 +216,7 @@ public class MainController {
 	
 	
 	// for Server
+	// 서버 연결 버튼
 	@FXML
 	public void onButton(ActionEvent ae) {
 		
@@ -247,19 +248,14 @@ public class MainController {
 		}
 		
 		else if (btn_onOff.getText().equals("OFF")) {
-			try {
+			
 				btn_onOff.setText("ON");
-				if(socket != null && !socket.isClosed()) {
-					socket.close();
-				}
-				System.out.println("연결종료");
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+				stopClient();
+				
 		}
 	}
 
-	
+	// 텍스트 전송 버튼
 	@FXML
 	public void send(ActionEvent ae) {
 		
@@ -269,7 +265,8 @@ public class MainController {
 			
 	}
 
-	
+	// 서버에서 수신해오는 메시지
+	// send (thread) > thread > thread > receive
 	public void receive() {
 		while(true) {
 			try {
@@ -282,20 +279,15 @@ public class MainController {
 					ta_msg.appendText(message);
 				});
 			}catch (Exception e) {
-				if(socket != null && !socket.isClosed()) {
-					try {
-						socket.close();
-						break;
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+				stopClient();
+				break;
 			}
 		}
 		
 	}
 	
+	// 서버 메시지 전송 메서드
+	// send (thread) > thread > thread > receive
 	public void sending(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -318,5 +310,18 @@ public class MainController {
 			}
 		};
 		thread.start();
+	}
+	
+	//클라이언트 프로그램 종료 메서드
+	public void stopClient() {
+		try {
+			if(socket != null && !socket.isClosed()) {
+				socket.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 }
