@@ -48,3 +48,38 @@
     -fx-background-image: url("loudspeaker.png");
     -fx-background-color: transparent;    
 }
+
+/*공지사항 */
+#AnchorPane{
+    -fx-background-color: #F4EBE2;
+    -fx-background-repeat: stretch;     
+}
+#TestArea{
+   	-fx-background: #FFFFFF 0% 0% no-repeat padding-box;
+	-fx-border-color: #E0BFE6;
+	-fx-border-width: 4;
+	-fx-border-radius: 5;
+	-fx-opacity: 1; 
+}
+#TextField{
+   	-fx-background: #FFFFFF 0% 0% no-repeat padding-box;
+	-fx-border-color: #E0BFE6;
+	-fx-border-width: 4;
+	-fx-border-radius: 5;
+	-fx-opacity: 1; 
+}
+#btn_enter{
+    -fx-background-color: #E0BFE6; 
+   	-fx-border-width: 4;
+	-fx-border-radius: 5;
+	-fx-opacity: 1;
+}
+#btn_home{
+    -fx-background-image: url("home.png");
+    -fx-background-color: transparent;    
+}
+#off{
+    -fx-background-image: url("off.png");
+    -fx-text-fill: transparent;
+    -fx-background-color: transparent;    
+} 
