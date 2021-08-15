@@ -9,19 +9,20 @@
    <children>
      <Pane fx:id="pane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@css/main.css">
          <children>
-            <Button fx:id="btn_play" layoutX="639.0" layoutY="71.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
-            <Button fx:id="btn_pause" layoutX="749.0" layoutY="69.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
-            <Button fx:id="btn_help" layoutX="865.0" layoutY="71.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
-            <Button fx:id="btn_heart" layoutX="624.0" layoutY="361.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
-            <Button fx:id="btn_snail" layoutX="796.0" layoutY="361.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
-            <Button fx:id="btn_sun" layoutX="624.0" layoutY="192.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" /> 	         
-            <Button fx:id="btn_water" layoutX="795.0" layoutY="192.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
+            <Button fx:id="btn_play" layoutX="639.0" layoutY="83.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
+            <Button fx:id="btn_pause" layoutX="750.0" layoutY="81.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
+            <Button fx:id="btn_help" layoutX="865.0" layoutY="83.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="74.0" />
+            <Button fx:id="btn_heart" layoutX="624.0" layoutY="373.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
+            <Button fx:id="btn_snail" layoutX="796.0" layoutY="373.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
+            <Button fx:id="btn_sun" layoutX="624.0" layoutY="204.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" /> 	         
+            <Button fx:id="btn_water" layoutX="795.0" layoutY="204.0" mnemonicParsing="false" prefHeight="155.0" prefWidth="155.0" />
             <Button fx:id="btn_weather" layoutX="19.0" layoutY="364.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="81.0" />
             <Button fx:id="btn_previouspage" layoutX="19.0" layoutY="475.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="81.0" />
             <Label layoutX="36.0" layoutY="232.0" text="location" />
             <Label layoutX="36.0" layoutY="276.0" text="temperature" />
             <Label layoutX="36.0" layoutY="320.0" text="status" />
             <Label layoutX="453.0" layoutY="327.0" text="a plant name" />
+            <Button fx:id="btn_loudspeaker" layoutX="939.0" layoutY="10.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" />
          </children>
      </Pane>
    </children>

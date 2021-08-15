@@ -40,3 +40,9 @@
     -fx-background-image: url("previouspage.png");
     -fx-background-color: transparent;
 }
+
+/*확성기 버튼 */
+#btn_loudspeaker{
+    -fx-background-image: url("loudspeaker.png");
+    -fx-background-color: transparent;    
+}
