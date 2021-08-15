@@ -1,5 +1,7 @@
+/*해바라기 배경 이미지 제거, 화분 배경 이미지 추가 */
+
 #pane{
-    -fx-background-image: url("background_2.png");
+    -fx-background-image: url("background.png");
     -fx-background-repeat: stretch;   
     -fx-background-size: 1000 600;
     -fx-background-position: center center;    
