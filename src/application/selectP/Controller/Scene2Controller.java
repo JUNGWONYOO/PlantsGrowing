@@ -9,11 +9,9 @@ public class Scene2Controller {
 	Label nameLabel;
 
 	public void displayName(String username) {
-<<<<<<< HEAD
-		nameLabel.setText(username + "  ¢¾"); 
-=======
-		nameLabel.setText("Plant " + username); 
->>>>>>> cc09892a977f8073c070180902c52f44fddf30ca
+		nameLabel.setText(username + "  ¢¾");
+		nameLabel.setText("Plant " + username);
+
 	}
 
 }
