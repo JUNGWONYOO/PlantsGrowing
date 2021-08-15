@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<<<<<<< HEAD
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,3 +25,22 @@
          </font></Button>
    </children>
 </Pane>
+=======
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.selectP.Controller.Scene1Controller">
+   <children>
+      <TextField fx:id="nameTextField" layoutX="380.0" layoutY="243.0" prefHeight="43.0" prefWidth="240.0" />
+      <Label layoutX="332.0" layoutY="130.0" text="Create Plant Name">
+         <font>
+            <Font name="Consolas" size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="loginButton" layoutX="479.0" layoutY="333.0" mnemonicParsing="false" onAction="#login" text="OK" />
+   </children>
+</Pane>
+>>>>>>> cc09892a977f8073c070180902c52f44fddf30ca
