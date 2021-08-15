@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.selectP.Controller.Scene2Controller">
+   <children>
+      <Label fx:id="nameLabel" alignment="CENTER" layoutY="150.0" prefHeight="56.0" prefWidth="600.0">
+         <font>
+            <Font name="Consolas" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel1" layoutX="235.0" layoutY="105.0" text="Hello !">
+         <font>
+            <Font name="Consolas" size="34.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
