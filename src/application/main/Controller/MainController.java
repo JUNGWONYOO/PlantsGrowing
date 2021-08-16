@@ -13,16 +13,13 @@ import application.main.weather.weatherVO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
+
 
 public class MainController {
 	
@@ -43,7 +40,7 @@ public class MainController {
 	@FXML
 	private Button btn_enter;
 	
-	
+	UserInfo user = LoginController.UserList.get(0);
 
 	@FXML
 	private Label lbl_wthr_location;
@@ -51,8 +48,9 @@ public class MainController {
 	private Label lbl_wthr_temperature;
 	@FXML
 	private Label lbl_wthr_status;
+	
 	@FXML
-	private Label lbl_plantName;
+	private Label lbl_plantName; 
 
 	
 	@FXML
@@ -64,7 +62,7 @@ public class MainController {
 	
 	Socket socket;
 	
-	UserInfo user = LoginController.UserList.get(0);
+	
 	private int loveCount = user.getCaring();
 	private int waterCount = user.getWatering();
 	private int tanningCount = user.getTanning();
@@ -73,36 +71,44 @@ public class MainController {
 	private int level = user.getLevel();
 	int i;
 	
-	DBConnector db = new DBConnector();
 	
-	public MainController() {
+	DBConnector db = new DBConnector();
+
+
+	// 이전화면에서 PlantName 넘어오게끔 만드는 메서드
+	public void setPname(String pName) {
+		lbl_plantName.setText(user.getPlantName());
+	}
+	
+	// 레벨업, 운세 등장시 dataRefresh
+	public void dataRefresh() {
 		
+		loveCount = 0;
+		waterCount = 0;
+		tanningCount = 0;
+		snailCount = 0;
 		
+		user.setCaring(0);
+		user.setNutrition(0);
+		user.setTanning(0);
+		user.setWatering(0);
+		db.updateAll(user);
 	}
 	
 	// 레벨업, 운세 알람 메서드 - 데이터 연동
 	public void levelOrFortune() {
-		lbl_plantName.setText(user.getPlantName());
+		
 		if(loveCount >= 3 && waterCount >= 3 && tanningCount >= 3 && snailCount >= 3) {
-			randRate = (int)(Math.random()*10 +1);
-			System.out.println(randRate);
 			
-			if(randRate < 6) {
+			randRate = (int)(Math.random()*10 +1);	// 운세와 레벨업 확률
+			int n = 6;
+			if(randRate < n) {
 				Alert oonseAlert = new Alert(AlertType.INFORMATION);
 				oonseAlert.setTitle("오늘의 한마디");
 				oonseAlert.setContentText(db.pickFortune());
 				oonseAlert.showAndWait();
+				dataRefresh();
 				
-				loveCount = 0;
-				waterCount = 0;
-				tanningCount = 0;
-				snailCount = 0;
-				
-				user.setCaring(0);
-				user.setNutrition(0);
-				user.setTanning(0);
-				user.setWatering(0);
-				db.updateAll(user);
 			}
 			else {
 				Alert oonseAlert = new Alert(AlertType.INFORMATION);
@@ -110,38 +116,18 @@ public class MainController {
 				if(level <= 3) {
 					level++;
 					user.setLevel(level);
+					dataRefresh();
 					
 					
-					loveCount = 0;
-					waterCount = 0;
-					tanningCount = 0;
-					snailCount = 0;
-					
-					user.setCaring(0);
-					user.setNutrition(0);
-					user.setTanning(0);
-					user.setWatering(0);
-					db.updateAll(user);
-					oonseAlert.setTitle("레벨 업");
 					oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
 					oonseAlert.showAndWait();
-				}else if(level > 3) {
-					
-
-					loveCount = 0;
-					waterCount = 0;
-					tanningCount = 0;
-					snailCount = 0;
-					
-					user.setCaring(0);
-					user.setNutrition(0);
-					user.setTanning(0);
-					user.setWatering(0);
-					db.updateAll(user);
+				}else if(level > 3) {	
+					dataRefresh();
 					
 					oonseAlert.setTitle("성공");
 					oonseAlert.setContentText("식물이 잘 자랐어요!!!! 식물과 함께 즐거운 삶을 보내봐요");
 					oonseAlert.showAndWait();
+					n = 11; // 만렙을 찍으면 더이상 레벨업 문구가 나오지 않게끔 설정하기 위해.
 				}
 				
 
@@ -149,6 +135,7 @@ public class MainController {
 		}
 		
 	}
+
 	
 	// 각 버튼
 	@FXML
@@ -228,7 +215,7 @@ public class MainController {
 				public void run() {
 					try {
 						socket = new Socket("127.0.0.1",user.getPort());
-						System.out.println("소켓 연결");
+						System.out.println("[소켓 연결]");
 						receive();	
 					} catch (Exception e) {
 						if(!socket.isClosed()) {
@@ -237,7 +224,7 @@ public class MainController {
 								System.out.println("[서버접속 실패]");
 								Platform.exit();
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+							
 								e1.printStackTrace();
 							}
 						}
@@ -262,7 +249,7 @@ public class MainController {
 		sending(user.getPlantName() + " : " + tfd_msg.getText() + "\n");
 		tfd_msg.setText("");
 		tfd_msg.requestFocus();
-			
+		System.out.println("[클라이언트 메시지 전송 성공] : " + user.getPlantName() +" : "+  tfd_msg.getText());
 	}
 
 	// 서버에서 수신해오는 메시지
@@ -274,7 +261,8 @@ public class MainController {
 				byte[] buffer = new byte[1024];
 				int length = in.read(buffer);
 				while(length == -1) throw new IOException();
-				String message = new String(buffer, 0 , length, "UTF-8");
+				String message = new String(buffer, 0 , length, "UTF-8");			
+				System.out.println("[클라이언트 메시지 수신 성공] : " + user.getPlantName() +" : "+  message);
 				Platform.runLater(()->{
 					ta_msg.appendText(message);
 				});
@@ -296,13 +284,13 @@ public class MainController {
 					byte[] buffer = message.getBytes("UTF-8");
 					out.write(buffer);
 					out.flush();
+					
 				}catch (Exception e) {
 					
 					if(socket != null && !socket.isClosed()) {
 						try {
 							socket.close();
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
@@ -317,8 +305,10 @@ public class MainController {
 		try {
 			if(socket != null && !socket.isClosed()) {
 				socket.close();
+				System.out.println("[클라이언트 접속 종료]");
 			}
 		} catch (Exception e) {
+			System.out.println("[클라이언트 종료 오류]");
 			e.printStackTrace();
 		}
 		

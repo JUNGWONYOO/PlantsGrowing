@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import application.dao.DBConnector;
 import application.firstLogin.Users.UserInfo;
+import application.main.Controller.Controller;
 import application.main.Controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +24,6 @@ public class LoginController {
 	
 	DBConnector connect = new DBConnector();
 
-	
 	@FXML
 	private Button btn;
 	
@@ -42,6 +42,7 @@ public class LoginController {
 	
 	public static Vector<UserInfo> UserList = new Vector<UserInfo>();
 	
+	
 	// 로그인 기능 (DB의 회원가입 정보를 가져올 수 있음)
 	public void Login(ActionEvent ae) throws IOException {
 			
@@ -50,20 +51,49 @@ public class LoginController {
 		
 			// 매 화면에 빈 생성자와 세트로 다니면 됨
 			// 빈 정보에 user id에 따라
-			UserInfo userinfo = new UserInfo();
-			UserList.add(userinfo);
+			UserInfo userinfo = new UserInfo();	
 			connect.loadInfo(userinfo, userNameTextField.getText());
+			UserList.add(userinfo);
 			
 			Stage primaryStage = (Stage) btn.getScene().getWindow();
 			Parent root ;
+			FXMLLoader loader;
+			Controller m;
 			
-			if(userinfo.getPlantName().equals("null")) {
-				root = FXMLLoader.load(getClass().getResource("../../selectP/View/CreateNameScene1.fxml"));
-			}else {
-				root = FXMLLoader.load(getClass().getResource("../../main/View/main1.fxml"));
+			String css = "null";
+			if(userinfo.getSpecies() == 0) {
+				loader = new FXMLLoader(getClass().getResource("../../selectP/View/SelectPlantScene.fxml"));	
 			}
 			
+			else if(userinfo.getSpecies() != 0 && userinfo.getPlantName().equals("null")) {
+				loader = new FXMLLoader(getClass().getResource("../../selectP/View/CreateNameScene.fxml"));		
+			}
+			
+			else if(!userinfo.getPlantName().equals("null") && userinfo.getSpecies() == 1 ) {		
+				loader = new FXMLLoader(getClass().getResource("../../main/View/main.fxml"));	
+				css = this.getClass().getResource("../../main/View/css/main.css").toExternalForm();
+	  
+			}
+			
+			else {
+				loader = new FXMLLoader(getClass().getResource("../../main/View/main.fxml"));
+				css = this.getClass().getResource("../../main/View/css/main.css").toExternalForm();
+			}
+
+			root = loader.load();
+		
+			if(!userinfo.getPlantName().equals("null")) {
+				m = loader.getController();
+				String pName = userinfo.getPlantName();
+				m.setPname(pName);
+			}
+			
+			
 			Scene scene = new Scene(root);
+			if(!css.equals("null")) {
+				scene.getStylesheets().add(css);
+			}
+			
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("식물키우기~");
 			primaryStage.show();

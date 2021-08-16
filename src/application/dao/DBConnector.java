@@ -2,7 +2,6 @@ package application.dao;
 
 import java.sql.*;
 
-import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 
 
@@ -48,6 +47,7 @@ public class DBConnector {
 			String sql = "SELECT * FROM members WHERE id = '" + ID + "' and password = '" + password + "'";
 			rs = st.executeQuery(sql);
 			if(rs.next()) {
+				System.out.println("[Id / pw match]데이터 베이스 check 완료 : " + ID +" " + password);
 				return true;
 			}
 					
@@ -64,6 +64,7 @@ public class DBConnector {
 			String sql = "SELECT * FROM members WHERE id = '" + ID + "'";
 			rs = st.executeQuery(sql);
 			if(rs.next()) {
+				System.out.println("[중복된 id] 데이터 베이스 check 완료: " + ID);
 				return true;
 			}
 					
@@ -88,9 +89,9 @@ public class DBConnector {
 			psmt.setInt(4, userInfo.getPort());
 			psmt.executeUpdate();
 			
-			System.out.println("계정생성 완료 id = " + userInfo.getId() +" pw = " + userInfo.getPassword());
+			System.out.println("[계정생성 완료] id = " + userInfo.getId() +" pw = " + userInfo.getPassword());
 		} catch(SQLException se) {
-			System.out.println("아이디 생성 오류");
+			System.out.println("계정 생성 오류");
 			se.printStackTrace();
 		}
 	}
@@ -180,6 +181,9 @@ public class DBConnector {
 				userinfo.setPort(rs.getInt(9));
 				userinfo.setSpecies(rs.getInt(10));
 				userinfo.setLevel(rs.getInt(11));
+				System.out.printf("[userInfo 불러오기 완료] id = %s / PlantName = %s / Watering = %d / Caring = %d / Tanning = %d / Nutrition = %d / Level = %d / Species = %d\n" ,
+								userinfo.getId() , userinfo.getPlantName(), userinfo.getWatering(), userinfo.getCaring(), 
+								userinfo.getTanning(), userinfo.getNutrition(), userinfo.getLevel(),userinfo.getSpecies());
 			}
 			
 			
@@ -196,7 +200,10 @@ public class DBConnector {
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			if(rs.next()) {
-				return rs.getString(1);
+				String ft =rs.getString(1);
+				System.out.println("[포춘 쿠키]운세 가져오기 성공 : " + ft);
+				
+				return ft;
 			}
 			
 		}catch(Exception e) {
