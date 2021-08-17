@@ -420,7 +420,7 @@ public class Controller implements Initializable, ControlInterface {
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
 			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
+			if(level < 3) {
 				level++;
 				user.setLevel(level);
 				db.updateAll(user);
@@ -428,7 +428,7 @@ public class Controller implements Initializable, ControlInterface {
 
 				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
 				oonseAlert.showAndWait();
-			}else if(level > 3) {	
+			}else if(level >= 3) {	
 				dataRefresh();
 				
 				oonseAlert.setTitle("성공");
@@ -530,7 +530,7 @@ public class Controller implements Initializable, ControlInterface {
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
 			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
+			if(level < 3) {
 				level++;
 				user.setLevel(level);
 				db.updateAll(user);
@@ -538,7 +538,7 @@ public class Controller implements Initializable, ControlInterface {
 
 				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
 				oonseAlert.showAndWait();
-			}else if(level > 3) {	
+			}else if(level >= 3) {	
 				dataRefresh();
 				
 				oonseAlert.setTitle("성공");
@@ -589,7 +589,7 @@ public class Controller implements Initializable, ControlInterface {
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
 			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
+			if(level < 3) {
 				level++;
 				user.setLevel(level);
 				db.updateAll(user);
@@ -597,7 +597,7 @@ public class Controller implements Initializable, ControlInterface {
 
 				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
 				oonseAlert.showAndWait();
-			}else if(level > 3) {	
+			}else if(level >= 3) {	
 				dataRefresh();
 				
 				oonseAlert.setTitle("성공");
