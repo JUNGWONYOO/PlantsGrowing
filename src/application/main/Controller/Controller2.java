@@ -15,6 +15,7 @@ import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.weather.weatherCrawl;
 import application.main.weather.weatherVO;
+import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -41,20 +42,21 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.TextArea;
 
-public class Controller2 implements Initializable {
+public class Controller2 implements Initializable, ControlInterface {
 
 	/////////////// ImageView = 그림 틀
 	@FXML
-	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect;
+	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect,helpView;
 	@FXML
 	private Button btn_play, btn_pause, btn_water, btn_sun, btn_heart, btn_snail, btn_weather, btnShowSlide,
-			btnHideSlide, btn_serverOn, btn_serverOff, btn_previouspage;
+			btnHideSlide, btn_serverOn, btn_serverOff, btn_previouspage,btn_helpPrev, btn_helpPrev1, btn_helpPrev2, 
+			btn_helpPrev3, btn_helpPrev4, btn_helpNxt2,btn_helpNxt3, btn_helpNxt4, btn_helpNxt5, btn_helpNxt6;
 	@FXML 
 	private Label lbl_plantName, lbl_wthr_location, lbl_wthr_temperature, lbl_wthr_status;
 	
 	@FXML
 	private AnchorPane scenePane;
-	
+
 	
 	private File directory;
 	private File[] files;
@@ -84,6 +86,8 @@ public class Controller2 implements Initializable {
 	@FXML
 	private AnchorPane paneslide;
 	
+	@FXML
+	private AnchorPane panehelp;
 	
 	
 	// 이전화면에서 PlantName 넘어오게끔 만드는 메서드
@@ -125,11 +129,16 @@ public class Controller2 implements Initializable {
 	Image chatBubble1 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_smile.png"));
 	Image chatBubble2 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_soso.png"));
 	Image chatBubble3 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_angery.png"));
+	Image helpPage1 = new Image(getClass().getResourceAsStream("../View/css/help_1.png"));
+	Image helpPage2 = new Image(getClass().getResourceAsStream("../View/css/help_2.png"));
+	Image helpPage3 = new Image(getClass().getResourceAsStream("../View/css/help_3.png"));
+	Image helpPage4 = new Image(getClass().getResourceAsStream("../View/css/help_4.png"));
+	Image helpPage5 = new Image(getClass().getResourceAsStream("../View/css/help_5.png"));
 	
 	
 	
 	@FXML
-	private void hideSlide(MouseEvent event) {
+	public void hideSlide(MouseEvent event) {
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.seconds(0.4));
 		slide.setNode(paneslide);
@@ -140,7 +149,7 @@ public class Controller2 implements Initializable {
 	}
 
 	@FXML
-	private void showSlide(MouseEvent event) {
+	public void showSlide(MouseEvent event) {
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.seconds(0.4));
 		slide.setNode(paneslide);
@@ -167,12 +176,178 @@ public class Controller2 implements Initializable {
 			paneslide.setTranslateX(650);
 
 		}
+		{
+			panehelp.setTranslateX(1000);
+		}
 
 		/////////////////// 브금 및 효과음
-		bgm = new Media(songs.get(0).toURI().toString());
+		bgm = new Media(songs.get(3).toURI().toString());
 		mP = new MediaPlayer(bgm);
 
 	}
+	
+	public void fadeAction() {
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), panehelp);
+		fadeTransition.setFromValue(0.0f);
+		fadeTransition.setToValue(1.0f);
+		// fadeTransition.setCycleCount(2);
+		fadeTransition.setAutoReverse(true);
+		fadeTransition.play();
+	}
+
+	public void helpAction(ActionEvent e) {
+		//helpView.setImage(helpPage1);
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.seconds(0.1));
+		slide.setNode(panehelp);
+		slide.setToX(0);
+		slide.play();
+		System.out.println("hello");
+		btn_helpPrev.setVisible(true);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(true);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+		
+	}
+	
+	public void helpPrev(ActionEvent e) {
+		//fadeAction();
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.seconds(0.4));
+		slide.setNode(panehelp);
+		slide.setToX(1000);
+		slide.play();
+		panehelp.setTranslateX(0);
+	}
+
+	public void helpTo2Action(ActionEvent e) {
+		helpView.setImage(helpPage2);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(true);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(true);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+		
+	}
+
+	public void helpTo3Action(ActionEvent e) {
+		helpView.setImage(helpPage3);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(true);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(true);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+	}
+
+	public void helpTo4Action(ActionEvent e) {
+		helpView.setImage(helpPage4);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(true);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(true);
+		btn_helpNxt6.setVisible(false);
+	}
+
+	public void helpTo5Action(ActionEvent e) {
+		helpView.setImage(helpPage5);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(true);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(true);
+	}
+	
+	public void helpTo6Action(ActionEvent e) {
+		
+		
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.seconds(0.01));
+		slide.setNode(panehelp);
+		slide.setToX(1000);
+		slide.play();
+		panehelp.setTranslateX(0);
+	}
+	public void helpTo1Prev(ActionEvent e) {
+		helpView.setImage(helpPage1);
+		btn_helpPrev.setVisible(true);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(true);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+	}
+
+	public void helpTo2Prev(ActionEvent e) {
+		helpView.setImage(helpPage2);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(true);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(true);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+	}
+
+	public void helpTo3Prev(ActionEvent e) {
+		helpView.setImage(helpPage3);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(true);
+		btn_helpPrev3.setVisible(false);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(true);
+		btn_helpNxt5.setVisible(false);
+		btn_helpNxt6.setVisible(false);
+	}
+
+	public void helpTo4Prev(ActionEvent e) {
+		helpView.setImage(helpPage4);
+		btn_helpPrev.setVisible(false);
+		btn_helpPrev1.setVisible(false);
+		btn_helpPrev2.setVisible(false);
+		btn_helpPrev3.setVisible(true);
+		btn_helpPrev4.setVisible(false);
+		btn_helpNxt2.setVisible(false);
+		btn_helpNxt3.setVisible(false);
+		btn_helpNxt4.setVisible(false);
+		btn_helpNxt5.setVisible(true);
+		btn_helpNxt6.setVisible(false);
+	}
+
 
 	public void playMedia(ActionEvent e) {
 		mP.setVolume(0.1);
@@ -272,13 +447,17 @@ public class Controller2 implements Initializable {
 		}
 		
 	}
+	
+	public void audioClipping() {
+		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
+		m1.setVolume(0.1);
+		m1.play();
+	}
 
 	////////////////////////// 4가지 버튼 액션
 	public void waterAction(ActionEvent e) throws SQLException {
 
-		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
-		m1.setVolume(0.1);
-		m1.play();
+		audioClipping();
 
 		waterCount++;
 		waterEffect.setImage(waterEffect1);
@@ -300,10 +479,8 @@ public class Controller2 implements Initializable {
 	
 	
 	public void lightAction(ActionEvent e) throws SQLException {
-		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
-		m1.setVolume(0.1);
-		m1.play();
-		
+		audioClipping();
+
 		lightEffect.setImage(lightEffect1);
 
 		lightCount++;
@@ -324,10 +501,8 @@ public class Controller2 implements Initializable {
 	// 사랑버튼
 	public void loveAction(ActionEvent e) throws SQLException {
 
-		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
-		m1.setVolume(0.1);
-		m1.play();
-		
+		audioClipping();
+
 		loveCount++;
 		
 		System.out.println(loveCount);
@@ -370,7 +545,7 @@ public class Controller2 implements Initializable {
 				
 			}
 			
-		} else if (10 < waterCount + lightCount + snailCount) {
+		} else if (20 < waterCount + lightCount + snailCount) {
 			dataRefresh();
 			
 		}
@@ -389,10 +564,8 @@ public class Controller2 implements Initializable {
 	}
 
 	public void snailAction(ActionEvent e) throws SQLException {
-		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
-		m1.setVolume(0.1);
-		m1.play();
-		
+		audioClipping();
+
 		snailCount++;
 		
 		snailEffect.setImage(snailEffect1);
@@ -410,7 +583,6 @@ public class Controller2 implements Initializable {
 		
 		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
 			
-			level++;
 			dataRefresh();
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
@@ -464,7 +636,7 @@ public class Controller2 implements Initializable {
 		Scene scene;
 		Parent root;
 		
-		root = FXMLLoader.load(getClass().getResource("../../selectP/View/SelectPlantScene.fxml"));
+		root = FXMLLoader.load(getClass().getResource("../../firstLogin/View/login.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -476,7 +648,7 @@ public class Controller2 implements Initializable {
 	//127.0.0.1
 	//서버 on > thread를통해 > server 전달 메시지 수신
 	@FXML
-	private void serverOn(MouseEvent event) {
+	public void serverOn(MouseEvent event) {
 		btn_serverOn.setVisible(false);
 		btn_serverOff.setVisible(true);
 		Thread thread = new Thread() {
@@ -504,7 +676,7 @@ public class Controller2 implements Initializable {
 	
 	// 서버 종료 버튼
 	@FXML
-	private void serverOff(MouseEvent event) {
+	public void serverOff(MouseEvent event) {
 		btn_serverOn.setVisible(true);
 		btn_serverOff.setVisible(false);
 		stopClient();

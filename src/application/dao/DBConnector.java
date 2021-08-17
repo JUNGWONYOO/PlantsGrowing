@@ -28,7 +28,9 @@ public class DBConnector {
 	// ID 로그인 시 ID Password 가 맞는지 확인
 	// sql문 작성하여 Statement로 보내주고, ResultSet으로 결과 받아줌
 	public boolean check(String ID, String password) throws SQLException {
+		
 		try {
+			
 			String sql = "SELECT * FROM members WHERE id = '" + ID + "' and password = '" + password + "'";
 			rs = st.executeQuery(sql);
 			if(rs.next()) {
@@ -38,10 +40,10 @@ public class DBConnector {
 					
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 check 검색 오류 : "  + e.getMessage());
-		}finally {
-			st.close();
-			rs.close();
-		}
+		}//finally {
+//			if(st!=null) st.close();
+//			if(rs!=null) rs.close();
+//		}
 		return false;
 	}
 	
