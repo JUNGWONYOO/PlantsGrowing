@@ -8,6 +8,7 @@ import java.util.Vector;
 import application.dao.DBConnector;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.Controller;
+import application.main.Controller.Controller2;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +60,8 @@ public class LoginController {
 			Parent root ;
 			FXMLLoader loader;
 			Controller m;
-			
+			Controller2 n;
+			String pName = null;
 			String css = "null";
 			
 			//user의 데이터를 바탕으로 화면의 이동을 달리하는 코드
@@ -74,23 +76,26 @@ public class LoginController {
 			else if(!userinfo.getPlantName().equals("null") && userinfo.getSpecies() == 1 ) {		
 				loader = new FXMLLoader(getClass().getResource("../../main/View/main.fxml"));	
 				css = this.getClass().getResource("../../main/View/css/main.css").toExternalForm();
-	  
+				pName = userinfo.getPlantName();
 			}
 			
 			else {
-				loader = new FXMLLoader(getClass().getResource("../../main/View/main.fxml"));
+				loader = new FXMLLoader(getClass().getResource("../../main/View/main2.fxml"));
 				css = this.getClass().getResource("../../main/View/css/main.css").toExternalForm();
+				pName = userinfo.getPlantName();
 			}
 			
 			
 			root = loader.load(); // root fxml의 controller를 가져와서 Controller 객체를 불러온 뒤, 다음 view에서도 user의 데이터가 적용될 수 있게끔
 		
-			if(!userinfo.getPlantName().equals("null")) {
-				m = loader.getController();
-				String pName = userinfo.getPlantName();
+			if(userinfo.getSpecies() == 1) {
+				m = loader.getController();		
 				m.setPname(pName);
 			}
-
+			if(userinfo.getSpecies() == 2) {
+				n = loader.getController();
+				n.setPname(pName);
+			}
 			Scene scene = new Scene(root);
 			
 			
@@ -100,7 +105,7 @@ public class LoginController {
 			
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image("file:src/application/main/View/css/menu_plant_icon.png"));
-			primaryStage.setTitle("식물키우기~");
+			primaryStage.setTitle("PlantsGrowing");
 			primaryStage.show();
 			
 			System.out.println( "id = " + userNameTextField.getText() + " login 완료 [IP = " + userinfo.getIP() + " / port = " + userinfo.getPort() +"]");

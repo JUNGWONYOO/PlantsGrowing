@@ -18,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -37,12 +38,13 @@ public class SelectPlantController {
 	UserInfo user = LoginController.UserList.get(0);
 	DBConnector db = new DBConnector();
 	
-	public void login(ActionEvent event) throws IOException, SQLException { //Cherry tomato button을 클릭했을 때
+	public void Alert1(ActionEvent event) throws IOException, SQLException { //Cherry tomato button을 클릭했을 때
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select Page");
 		alert.setHeaderText("Cherry Tomato" + "를 선택한 게 맞나요?");
 		alert.setContentText("만일, 아니라면 '취소'를 선택하세요.");
+		alert.setGraphic(new ImageView("file:src/application/selectP/View/alert_icon.png")); // alert 아이콘 이미지 변경
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
@@ -60,12 +62,13 @@ public class SelectPlantController {
 		}
 	}
 
-	public void logout(ActionEvent event) throws IOException, SQLException { //Sunflower button을 클릭했을 때
+	public void Alert2(ActionEvent event) throws IOException, SQLException { //Sunflower button을 클릭했을 때
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select Page");
 		alert.setHeaderText("Sunflower" + "를 선택한 게 맞나요?");
 		alert.setContentText("만일, 아니라면 '취소'를 선택하세요.");
+		alert.setGraphic(new ImageView("file:src/application/selectP/View/alert_icon.png")); // alert 아이콘 이미지 변경
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {

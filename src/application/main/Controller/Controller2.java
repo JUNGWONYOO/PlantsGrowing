@@ -41,11 +41,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.TextArea;
 
-public class Controller implements Initializable {
+public class Controller2 implements Initializable {
 
 	/////////////// ImageView = 그림 틀
 	@FXML
-	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect, loveEffect, snailEffect;
+	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect;
 	@FXML
 	private Button btn_play, btn_pause, btn_water, btn_sun, btn_heart, btn_snail, btn_weather, btnShowSlide,
 			btnHideSlide, btn_serverOn, btn_serverOff, btn_previouspage;
@@ -116,8 +116,8 @@ public class Controller implements Initializable {
 	
 	
 	/////////////// 레벨별 식물, 효과, 상태 이미지
-	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/ct2.png"));
-	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/ct3.png"));
+	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/sf2.png"));
+	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/sf3.png"));
 	Image waterEffect1 = new Image(getClass().getResourceAsStream("../View/css/waterEffect.png"));
 	Image lightEffect1 = new Image(getClass().getResourceAsStream("../View/css/lightEffect.png"));
 	Image loveEffect1 = new Image(getClass().getResourceAsStream("../View/css/loveEffect.png"));
@@ -333,14 +333,13 @@ public class Controller implements Initializable {
 		System.out.println(loveCount);
 		chatBubbleView.setImage(chatBubble1);
 		
-
 		loveEffect.setImage(loveEffect1);
 		
 		PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
 		pause1.setOnFinished(a -> loveEffect.setImage(null));
 		pause1.play();
 		
-		PauseTransition pause = new PauseTransition(Duration.seconds(3));
+		PauseTransition pause = new PauseTransition(Duration.seconds(1));
 		pause.setOnFinished(a -> chatBubbleView.setImage(null));
 		pause.play();
 
@@ -350,6 +349,8 @@ public class Controller implements Initializable {
 		db.updateAll(user);
 
 		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
+			dataRefresh();
+			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
 			oonseAlert.setTitle("레벨 업!");
 			if(level <= 3) {
@@ -393,6 +394,7 @@ public class Controller implements Initializable {
 		m1.play();
 		
 		snailCount++;
+		
 		snailEffect.setImage(snailEffect1);
 		
 		PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
@@ -404,7 +406,12 @@ public class Controller implements Initializable {
 		user.setNutrition(snailCount);
 		db.updateAll(user);
 		
+		
+		
 		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
+			
+			level++;
+			dataRefresh();
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
 			oonseAlert.setTitle("레벨 업!");
@@ -424,6 +431,7 @@ public class Controller implements Initializable {
 				oonseAlert.showAndWait();
 				
 			}
+			
 		} else if (snailCount == 2) {
 			
 			snailCount = 1;

@@ -85,7 +85,6 @@ public class DBConnector {
 			System.out.println("계정 생성 오류");
 			se.printStackTrace();
 		} finally {
-			
 			psmt.close();
 		}
 	}
@@ -108,7 +107,6 @@ public class DBConnector {
 			System.out.println("식물 종 업데이트 오류");
 			se.printStackTrace();
 		} finally {
-			
 			psmt.close();
 		}
 	}
@@ -132,7 +130,6 @@ public class DBConnector {
 			System.out.println("식물 이름 업데이트 오류");
 			se.printStackTrace();
 		}finally {
-			
 			psmt.close();
 		}
 	}
@@ -159,7 +156,6 @@ public class DBConnector {
 			System.out.println("데이터 업데이트 오류");
 			se.printStackTrace();
 		} finally {
-			
 			psmt.close();
 		}
 	}
@@ -195,7 +191,6 @@ public class DBConnector {
 			System.out.println("데이터 불러오기 오류");
 			e.printStackTrace();
 		}finally {
-			
 			st.close();
 			rs.close();
 		}
@@ -217,7 +212,6 @@ public class DBConnector {
 		}catch(Exception e) {
 			System.out.println("운세가져오기 오류");
 		}finally {
-			
 			st.close();
 			rs.close();
 		}
