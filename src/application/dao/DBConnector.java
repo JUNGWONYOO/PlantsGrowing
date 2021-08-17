@@ -40,7 +40,7 @@ public class DBConnector {
 					
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 check 검색 오류 : "  + e.getMessage());
-		}//finally {
+		}//finally { 한번 못찾으면 꺼져버림
 //			if(st!=null) st.close();
 //			if(rs!=null) rs.close();
 //		}
