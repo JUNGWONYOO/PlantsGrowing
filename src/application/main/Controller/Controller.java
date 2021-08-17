@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import application.dao.DBConnector;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
@@ -32,6 +34,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import javafx.scene.control.TextArea;
 
 public class Controller implements Initializable {
 
@@ -52,7 +55,7 @@ public class Controller implements Initializable {
 	private File[] files;
 	private ArrayList<File> songs;
 
-	// db, 서버 연동용 유저리스트/ 소켓
+	// db, 서버 연동용 유저리스트와 소켓
 	UserInfo user = LoginController.UserList.get(0);
 	DBConnector db = new DBConnector();
 	Socket socket;
@@ -61,7 +64,7 @@ public class Controller implements Initializable {
 	private Media bgm;
 	private MediaPlayer mP;
 	
-
+	// user 객체에 저장되어있는 점수와 레벨을 받아오는 변수
 	private int loveCount = user.getCaring();
 	private int lightCount = user.getTanning();
 	private int waterCount = user.getWatering();
@@ -72,19 +75,26 @@ public class Controller implements Initializable {
 	@FXML
 	private TextField TextField;
 	@FXML
-	private javafx.scene.control.TextArea TextArea;
+	private TextArea TextArea;
 	@FXML
 	private AnchorPane paneslide;
 	
 	
 	
 	// 이전화면에서 PlantName 넘어오게끔 만드는 메서드
+	// 레벨도 동시에 넘어오면서 바로 레벨 별 사진 등장
 	public void setPname(String pName) {
 		lbl_plantName.setText(user.getPlantName());
+		if(user.getLevel()>=3) {
+			myPlantView.setImage(plantLevel3);
+		}
+		else if(user.getLevel() == 2) {
+			myPlantView.setImage(plantLevel2);
+		}
 	}
 	
 	// 레벨업, 운세 등장시 dataRefresh
-	public void dataRefresh() {
+	public void dataRefresh() throws SQLException {
 		
 		loveCount = 0;
 		waterCount = 0;
@@ -96,6 +106,7 @@ public class Controller implements Initializable {
 		user.setTanning(0);
 		user.setWatering(0);
 		db.updateAll(user);
+	
 	}
 	
 	
@@ -172,7 +183,7 @@ public class Controller implements Initializable {
 	
 	
 	// 버튼클릭 시 랜덤 확률로 포츈쿠키 등장
-	public void fortunecookie() {
+	public void fortunecookie() throws SQLException {
 
 		randRate = (int)(Math.random()*10 +1);	
 		
@@ -187,8 +198,9 @@ public class Controller implements Initializable {
 		}
 	}
 	
-	//버튼을 누를때마다 달리는 조건
-	public void buttonPressing(int eachCount, String element) {
+	//light , water 버튼을 누를때마다 수행되는 메서드
+	//운세, 레벨업, 챗버블 등장
+	public void buttonPressing(int eachCount, String element) throws SQLException {
 
 		PauseTransition pause = new PauseTransition(Duration.seconds(1));
 		pause.setOnFinished(a -> waterEffect.setImage(null));
@@ -227,7 +239,7 @@ public class Controller implements Initializable {
 			dataRefresh();
 		} 
 		
-		
+		// 레벨업 조건
 		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
 			
 			Alert oonseAlert = new Alert(AlertType.INFORMATION);
@@ -258,13 +270,12 @@ public class Controller implements Initializable {
 		case 3:
 			myPlantView.setImage(plantLevel3);
 			break;
-		case 4:
-			System.exit(0);
 		}
+		
 	}
 
 	////////////////////////// 4가지 버튼 액션
-	public void waterAction(ActionEvent e) {
+	public void waterAction(ActionEvent e) throws SQLException {
 
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
@@ -278,13 +289,14 @@ public class Controller implements Initializable {
 		System.out.println(waterCount);
 		
 		
-		user.setTanning(lightCount);
+		user.setWatering(waterCount);
 		db.updateAll(user);
 
 		
 	}
-
-	public void lightAction(ActionEvent e) {
+	
+	
+	public void lightAction(ActionEvent e) throws SQLException {
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
 		m1.play();
@@ -297,10 +309,13 @@ public class Controller implements Initializable {
 		fortunecookie();
 		buttonPressing(lightCount, "light");
 		
+		user.setTanning(lightCount);
+		db.updateAll(user);
+		
 		
 	}
 	// 사랑버튼
-	public void loveAction(ActionEvent e) {
+	public void loveAction(ActionEvent e) throws SQLException {
 
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
@@ -316,8 +331,11 @@ public class Controller implements Initializable {
 		pause.play();
 
 		fortunecookie();
+		
+		user.setCaring(loveCount);
+		db.updateAll(user);
 
-		if (waterCount == 3 && lightCount == 2 && loveCount > 2 && snailCount == 1) {
+		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
 			level++;
 			dataRefresh();
 			user.setLevel(level);
@@ -336,13 +354,12 @@ public class Controller implements Initializable {
 		case 3:
 			myPlantView.setImage(plantLevel3);
 			break;
-		case 4:
-			System.exit(0);
+		
 		}
 		
 	}
 
-	public void snailAction(ActionEvent e) {
+	public void snailAction(ActionEvent e) throws SQLException {
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
 		m1.play();
@@ -350,6 +367,9 @@ public class Controller implements Initializable {
 		snailCount++;
 		
 		fortunecookie();
+		
+		user.setNutrition(snailCount);
+		db.updateAll(user);
 		
 		if (waterCount == 3 && lightCount == 2 && loveCount > 2 && snailCount == 1) {
 			
@@ -380,12 +400,12 @@ public class Controller implements Initializable {
 		case 3:
 			myPlantView.setImage(plantLevel3);
 			break;
-		case 4:
-			System.exit(0);
+
 		}
 		
 	}
-
+	//127.0.0.1
+	//서버 on > thread를통해 > server 전달 메시지 수신
 	@FXML
 	private void serverOn(MouseEvent event) {
 		btn_serverOn.setVisible(false);
@@ -423,6 +443,7 @@ public class Controller implements Initializable {
 
 	// 서버에서 수신해오는 메시지
 	// send (thread) > thread > thread > receive
+	// receive하고 UTF-8로 TextArea로 append
 	public void receive() {
 		while(true) {
 			try {
@@ -431,7 +452,7 @@ public class Controller implements Initializable {
 				int length = in.read(buffer);
 				while(length == -1) throw new IOException();
 				String message = new String(buffer, 0 , length, "UTF-8");			
-				System.out.println("[클라이언트 메시지 수신 성공] : " + user.getPlantName() +" : "+  message);
+				System.out.println("[클라이언트 메시지 수신 성공] : " +  message);
 				Platform.runLater(()->{
 					TextArea.appendText(message);
 				});
@@ -443,8 +464,20 @@ public class Controller implements Initializable {
 		
 	}
 	
+	// 전송 버튼
+	// sending 메서드의 매개변수로 전달할 메시지를 담아준다.
+	public void chatAction(ActionEvent e) {
+		
+		sending(user.getPlantName() + " : " + TextField.getText() + "\n");
+		System.out.println("[클라이언트 메시지 전송 성공] : " + user.getPlantName() +" : "+  TextField.getText());
+		TextField.setText("");
+		TextField.requestFocus();
+		
+	}
+	
 	// 서버 메시지 전송 메서드
-	// send (thread) > thread > thread > receive
+	// send (thread) > thread(serverClient in) > thread(serverClient out) > receive
+	// 입력된 메시지를 서버에 전달(UTF-8)
 	public void sending(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -483,17 +516,9 @@ public class Controller implements Initializable {
 		
 		
 	}
-
-
-	public void chatAction(ActionEvent e) {
-		
-		sending(user.getPlantName() + " : " + TextField.getText() + "\n");
-		TextField.setText("");
-		TextField.requestFocus();
-		System.out.println("[클라이언트 메시지 전송 성공] : " + user.getPlantName() +" : "+  TextField.getText());
-		
-	}
-
+	
+	// 날씨 불러오기 버튼
+	// 날씨를 크롤해와서 lbl text를 set 해줌.
 	public void weatherAction(ActionEvent e) {
 		weatherVO wVO = new weatherVO();
 		try {
@@ -508,22 +533,5 @@ public class Controller implements Initializable {
 		}
 
 	}
-
-///////////////////// 로그아웃 버튼, 죽은 코드
-//	public void logout(ActionEvent event) {
-//
-//		Alert alert = new Alert(AlertType.CONFIRMATION);
-//		alert.setTitle("로그아웃");
-//		alert.setHeaderText("게임을 종료한다!");
-//		alert.setContentText("나가기 전에 저장하시겠습니까?: ");
-//
-//		if (alert.showAndWait().get() == ButtonType.OK) {
-//			stage = (Stage) scenePane.getScene().getWindow();
-//			System.out.println("로그아웃 했습니다");
-//			stage.close();
-//		}
-//	}
-
-	/////////////////////////////// 시간 디스플레이
 
 }

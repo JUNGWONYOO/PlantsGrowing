@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.firstLogin.Controller.LoginController">
    <children>
       <ImageView fitHeight="81.0" fitWidth="81.0" layoutX="265.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
@@ -24,25 +23,25 @@
       </Label>
       <Label layoutX="100.0" layoutY="165.0" prefHeight="32.0" prefWidth="91.0" text="User Name">
          <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="109.0" layoutY="201.0" prefHeight="32.0" prefWidth="91.0" text="PassWord">
-         <font>
-            <Font size="17.0" />
+            <Font name="Consolas" size="17.0" />
          </font>
       </Label>
       <TextField fx:id="userNameTextField" layoutX="199.0" layoutY="165.0" prefHeight="32.0" prefWidth="272.0" promptText="UserName" />
       <PasswordField fx:id="enterPasswordField" layoutX="199.0" layoutY="203.0" prefHeight="32.0" prefWidth="272.0" promptText="Password" />
-      <Button fx:id="btn" layoutX="133.0" layoutY="284.0" mnemonicParsing="false" onAction="#Login" prefHeight="32.0" prefWidth="344.0" style="-fx-background-color: #81c147;" text="Login" textFill="#fffefe" >
+      <Button fx:id="btn" layoutX="133.0" layoutY="284.0" mnemonicParsing="false" onAction="#Login" prefHeight="32.0" prefWidth="344.0" style="-fx-background-color: #81c147;" text="Login" textFill="#fffefe">
          <font>
-            <Font name="Arial" size="17.0" />
+            <Font name="Consolas" size="17.0" />
          </font>
       </Button>
       <Button fx:id="btn" layoutX="133.0" layoutY="330.0" mnemonicParsing="false" onAction="#createNewId" prefHeight="32.0" prefWidth="344.0" style="-fx-background-color: #81c147;" text="Create New ID" textFill="#fffefe">
          <font>
-            <Font name="Arial" size="17.0" />
+            <Font name="Consolas" size="17.0" />
          </font>
       </Button>
+      <Label layoutX="108.0" layoutY="203.0" prefHeight="32.0" prefWidth="91.0" text="Password">
+         <font>
+            <Font name="Consolas" size="17.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

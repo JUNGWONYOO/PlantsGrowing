@@ -17,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 
 // 서버
-public class Main extends Application {
+public class ServerMain extends Application {
 	
 	// threadPool로 관리하게 되면 작업큐에서 스레드를 처리하고 다시 새로운 스레드를 처리하여 애플리케이션 성능 유지에 도움 됨.
 	public static ExecutorService threadPool;
@@ -26,9 +26,6 @@ public class Main extends Application {
 	ServerSocket serverSocket;
 	Socket socket;
 	
-	
-	//String IP = "127.0.0.1";
-	//int port = 9876;
 	// 서버시작, socketServer를 로컬호스트로 열어주고, 클라이언트(소켓)를 받아 벡터에 저장한다.
 	// 해당 내용을 스레드로 보내 쓰레드 풀에서 관리해준다.
 	public void startServer(String IP, int port) {
@@ -65,8 +62,10 @@ public class Main extends Application {
 			}
 			
 		};
-		threadPool = Executors.newCachedThreadPool();
-		threadPool.submit(thread);
+		// 이전 사용 스레드 재사용 ,사용되지 않는 스레드는 명시적 제거 없이 제거
+		// 단기적 비동기 태스크 처리 시 많이 사용된다고 함
+		threadPool = Executors.newCachedThreadPool(); 
+		threadPool.submit(thread); //예외가 발생해도 계속 실행
 	}
 	
 	// 서버중지 메서드
@@ -96,7 +95,7 @@ public class Main extends Application {
 		
 	}
 
-	
+	// 서버 GUI
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
@@ -119,14 +118,14 @@ public class Main extends Application {
 			if(toggleButton.getText().equals("시작하기")) {
 				startServer(IP,port);
 			Platform.runLater(() -> {
-				String message = String.format("[서버시작] \n", IP, port);
+				String message = String.format("[서버시작] %3s / %3s\n", IP, port);
 				textArea.appendText(message);
 				toggleButton.setText("종료하기");
 			});
 		} else {
 			stopServer();
 			Platform.runLater(() -> {
-				String message = String.format("[서버종료] \n", IP, port);
+				String message = String.format("[서버종료] %3s / %3s \n", IP, port);
 				textArea.appendText(message);
 				toggleButton.setText("시작하기");
 			});

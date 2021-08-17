@@ -8,6 +8,7 @@ public class PGServerClient {
 	
 	Socket socket;
 	
+	//생성자를 통해 socket 만들어주고 receive 실행
 	public PGServerClient(Socket socket) {
 		this.socket = socket;
 		receive();
@@ -36,7 +37,7 @@ public class PGServerClient {
 								+ Thread.currentThread().getName());
 						
 						String message = new String(buffer, 0, length, "UTF-8");
-						for(PGServerClient client : Main.clients) {
+						for(PGServerClient client : ServerMain.clients) {
 							client.send(message);
 						}
 					}
@@ -53,7 +54,7 @@ public class PGServerClient {
 			}
 			
 		};
-		Main.threadPool.submit(thread);
+		ServerMain.threadPool.submit(thread);
 	}
 	
 	// 클라이언트에게 확성기를 전달하는 메서드
@@ -77,7 +78,7 @@ public class PGServerClient {
 								+ socket.getRemoteSocketAddress() + " : " 
 								+ Thread.currentThread().getName());
 						
-						Main.clients.remove(PGServerClient.this);
+						ServerMain.clients.remove(PGServerClient.this);
 					}catch(Exception e2) {
 						e2.printStackTrace();
 					}
@@ -85,7 +86,7 @@ public class PGServerClient {
 				
 			}
 		};
-		Main.threadPool.submit(thread);
+		ServerMain.threadPool.submit(thread);
 	}
 	
 }

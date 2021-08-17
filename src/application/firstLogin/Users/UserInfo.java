@@ -1,5 +1,9 @@
 package application.firstLogin.Users;
 
+// VO 라고 생각하면됨.
+// db 기록을 구성하는 필드들을 객체로 생성하고
+// get set 이용해서 받아오기 위한 코드
+// VO에 담아서 > DAO로부터 전달받음
 public class UserInfo {
 	
 	private String id;

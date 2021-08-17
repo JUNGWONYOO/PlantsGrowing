@@ -15,7 +15,7 @@
       <Button fx:id="btn_heart" layoutX="624.0" layoutY="361.0" mnemonicParsing="false" onAction="#loveAction" prefHeight="155.0" prefWidth="155.0" />
       <Button fx:id="btn_snail" layoutX="796.0" layoutY="361.0" mnemonicParsing="false" onAction="#snailAction" prefHeight="155.0" prefWidth="155.0" />
       <ImageView fx:id="waterEffect" fitHeight="299.0" fitWidth="282.0" layoutX="205.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="myPlantView" fitHeight="642.0" fitWidth="642.0" layoutX="26.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="myPlantView" fitHeight="642.0" fitWidth="642.0" layoutX="70.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@css/sf1.png" />
          </image>

@@ -22,27 +22,12 @@ public class DBConnector {
 			System.out.println("시작시 데이터 연결 실패");
 		}catch(Exception e) {
 			e.printStackTrace();
-		}	
-	}
-	
-	// DB 연결 connecter
-	public Connection connect() {
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/plantgrowing?autoReconnect=true", "root", "1234");
-			st = conn.createStatement();
-		}catch(ClassNotFoundException ce) {
-			System.out.println("드라이버 로딩 실패");
-		}catch(Exception e) {
-			e.printStackTrace();
 		}
-		return conn;
 	}
-	
+
 	// ID 로그인 시 ID Password 가 맞는지 확인
 	// sql문 작성하여 Statement로 보내주고, ResultSet으로 결과 받아줌
-	public boolean check(String ID, String password) {
+	public boolean check(String ID, String password) throws SQLException {
 		try {
 			String sql = "SELECT * FROM members WHERE id = '" + ID + "' and password = '" + password + "'";
 			rs = st.executeQuery(sql);
@@ -53,13 +38,16 @@ public class DBConnector {
 					
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 check 검색 오류 : "  + e.getMessage());
+		}finally {
+			st.close();
+			rs.close();
 		}
 		return false;
 	}
 	
 	// ID 중복확인
 	// sql문 작성하여 Statement로 보내주고, ResultSet으로 결과 받아줌
-	public boolean checkDuplicate(String ID) {
+	public boolean checkDuplicate(String ID) throws SQLException {
 		try {
 			String sql = "SELECT * FROM members WHERE id = '" + ID + "'";
 			rs = st.executeQuery(sql);
@@ -70,13 +58,16 @@ public class DBConnector {
 					
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 checkDuplicate 검색 오류 : "  + e.getMessage());
+		}finally {
+			rs.close();
+			st.close();
 		}
 		return false;
 	}
 	
 	// 아이디 생성시 DB업데이트
 	// userinfo id, pw만 있는 생성자 버전 사용해서 업뎃하면 됨.
-	public void createId(UserInfo userInfo) {
+	public void createId(UserInfo userInfo) throws SQLException {
 		PreparedStatement psmt = null;
 		try {
 			
@@ -93,11 +84,14 @@ public class DBConnector {
 		} catch(SQLException se) {
 			System.out.println("계정 생성 오류");
 			se.printStackTrace();
+		} finally {
+			
+			psmt.close();
 		}
 	}
 	
-	// 닉네임 세팅 때 아이디로 세팅
-	public void updatePlantSpecies(UserInfo userInfo) {
+	// 식물 종류 선택
+	public void updatePlantSpecies(UserInfo userInfo) throws SQLException {
 		
 		PreparedStatement psmt = null;
 		try {
@@ -113,12 +107,15 @@ public class DBConnector {
 		} catch(SQLException se) {
 			System.out.println("식물 종 업데이트 오류");
 			se.printStackTrace();
+		} finally {
+			
+			psmt.close();
 		}
 	}
 	
 	
 	// 닉네임 세팅 때 아이디로 세팅
-	public void updatePlantName(UserInfo userInfo) {
+	public void updatePlantName(UserInfo userInfo) throws SQLException {
 		
 		PreparedStatement psmt = null;
 		try {
@@ -134,11 +131,14 @@ public class DBConnector {
 		} catch(SQLException se) {
 			System.out.println("식물 이름 업데이트 오류");
 			se.printStackTrace();
+		}finally {
+			
+			psmt.close();
 		}
 	}
 
 	// 메인페이지에서 아이디가 드러나지 않을때 닉네임으로 세팅하는기능
-	public void updateAll(UserInfo userInfo) {
+	public void updateAll(UserInfo userInfo) throws SQLException {
 		
 		PreparedStatement psmt = null;
 		try {
@@ -158,10 +158,14 @@ public class DBConnector {
 		} catch(SQLException se) {
 			System.out.println("데이터 업데이트 오류");
 			se.printStackTrace();
+		} finally {
+			
+			psmt.close();
 		}
 	}
 	
-	public void loadInfo(UserInfo userinfo,String id) {
+	//데이터 업로드, db의 데이터를 게임 내 정보로 가져오기
+	public void loadInfo(UserInfo userinfo,String id) throws SQLException {
 		
 		try {
 			String sql = "SELECT * FROM members WHERE id = '" +id +"'";
@@ -190,11 +194,15 @@ public class DBConnector {
 		}catch (Exception e) {
 			System.out.println("데이터 불러오기 오류");
 			e.printStackTrace();
+		}finally {
+			
+			st.close();
+			rs.close();
 		}
 	}
 	
 	// 행운의 포춘쿠키 뽑기
-	public String pickFortune() {
+	public String pickFortune() throws SQLException {
 		try {
 			String sql = "SELECT content FROM fortune ORDER BY rand() LIMIT 1";
 			st = conn.createStatement();
@@ -208,6 +216,10 @@ public class DBConnector {
 			
 		}catch(Exception e) {
 			System.out.println("운세가져오기 오류");
+		}finally {
+			
+			st.close();
+			rs.close();
 		}
 		return "잘 지내봐요";
 	}

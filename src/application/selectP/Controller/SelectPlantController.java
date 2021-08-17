@@ -1,6 +1,7 @@
 package application.selectP.Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import application.dao.DBConnector;
@@ -16,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -35,7 +37,7 @@ public class SelectPlantController {
 	UserInfo user = LoginController.UserList.get(0);
 	DBConnector db = new DBConnector();
 	
-	public void login(ActionEvent event) throws IOException { //Cherry tomato button을 클릭했을 때
+	public void login(ActionEvent event) throws IOException, SQLException { //Cherry tomato button을 클릭했을 때
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select Page");
@@ -46,6 +48,8 @@ public class SelectPlantController {
 		if (result.get() == ButtonType.OK) {
 			root = FXMLLoader.load(getClass().getResource("../../selectP/View/CreateNameScene.fxml")); // 이름 입력 페이지로 이동
 			System.out.println("1"); // '1'출력
+			
+			// user 정보를 업데이트하고 db에 plantSpecies 업데이트
 			user.setSpecies(1);
 			db.updatePlantSpecies(user);
 			
@@ -56,7 +60,7 @@ public class SelectPlantController {
 		}
 	}
 
-	public void logout(ActionEvent event) throws IOException { //Sunflower button을 클릭했을 때
+	public void logout(ActionEvent event) throws IOException, SQLException { //Sunflower button을 클릭했을 때
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select Page");
@@ -67,10 +71,13 @@ public class SelectPlantController {
 		if (result.get() == ButtonType.OK) {
 			root = FXMLLoader.load(getClass().getResource("../../selectP/View/CreateNameScene.fxml")); // 이름 입력 페이지로 이동
 			System.out.println("2"); // '2'출력
+			
+			// user 정보를 업데이트하고 db에 plantSpecies 업데이트
 			user.setSpecies(2);
 			db.updatePlantSpecies(user);
 			
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.getIcons().add(new Image("file:src/application/main/View/css/menu_plant_icon.png"));
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();

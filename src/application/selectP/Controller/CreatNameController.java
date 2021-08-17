@@ -1,13 +1,13 @@
 package application.selectP.Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import application.dao.DBConnector;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.Controller;
-import application.main.Controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class CreatNameController {
@@ -35,7 +36,7 @@ public class CreatNameController {
 	UserInfo user = LoginController.UserList.get(0);
 	DBConnector db = new DBConnector();
 	
-	public void login(ActionEvent event) throws IOException {
+	public void login(ActionEvent event) throws IOException, SQLException {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Name Check");
@@ -55,7 +56,7 @@ public class CreatNameController {
 			root = loader.load();
 		
 			
-			Controller m = loader.getController();
+			Controller m = loader.getController(); // 메인페이지 닉네임 넘겨주는 코드
 			String pName = user.getPlantName();
 			m.setPname(pName);
 			
@@ -65,7 +66,7 @@ public class CreatNameController {
 			
 			String css = this.getClass().getResource("../../main/View/css/main.css").toExternalForm();
 			scene.getStylesheets().add(css);
-			
+			stage.getIcons().add(new Image("file:src/application/main/View/css/menu_plant_icon.png"));
 			stage.setScene(scene);
 			stage.show();
 
