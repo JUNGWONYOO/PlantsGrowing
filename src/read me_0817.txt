@@ -1,0 +1,27 @@
+수정 log
+
+1) Class명 수정
+ 
+CreatNameController > CreateNameController
+→ 철자 오류(Creat'e')
+
+
+2) 코드 수정
+- CreateNameController
+
+① 39번째줄 public void login > public void Alert
+② 45번째줄 코드 추가
+alert.setGraphic(new ImageView("file:src/application/selectP/View/image/alert_icon.png")); // alert 아이콘 이미지 변경
+
+- SelectPlantController
+
+① 40번째줄 public void login > public void Alert1
+② 47번째줄 코드 추가
+alert.setGraphic(new ImageView("file:src/application/selectP/View/image/alert_icon.png")); // alert 아이콘 이미지 변경
+③ 65번째줄 public void logout > public void Alert2
+④ 71번째줄 코드 추가
+alert.setGraphic(new ImageView("file:src/application/selectP/View/image/alert_icon.png")); // alert 아이콘 이미지 변경
+
+3) 이미지 추가
+- 폴더: application.selectP.View.image
+- 이미지명: alert_icon.png
