@@ -2,7 +2,7 @@
 created by Jinhee Lee, Junglim You, Euijung Park, Jaehun Choi
 
 PlatnsGrowing is a healing game with various features. Stay tuned for the upcoming updates.
-This game was made for the educational purpose and educational purpose only.
+*This game was made for the educational purpose and educational purpose only.
 
 # Basic Features
 1. Login / Create account
