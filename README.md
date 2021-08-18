@@ -11,7 +11,7 @@ No duplicates IDs are allowed.
 
 2. Select Plants Page
 In this page, a client is given choices of two plants, mini tomato and sunflower. 
-The name typed in become the plant's name to be stored on mysql database.
+The name typed in becomes the plant's name to be stored on mysql database.
 
 3. Help button
 Click help button to figure out instruction on game and how to grow plants. 
