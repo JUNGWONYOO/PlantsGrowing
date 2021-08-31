@@ -44,7 +44,7 @@ import javafx.scene.control.TextArea;
 
 public class Controller2 implements Initializable, ControlInterface {
 
-	/////////////// ImageView = ±×¸² Æ²
+	/////////////// ImageView = ê·¸ë¦¼ í‹€
 	@FXML
 	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect,helpView;
 	@FXML
@@ -62,8 +62,8 @@ public class Controller2 implements Initializable, ControlInterface {
 	private File[] files;
 	private ArrayList<File> songs;
 
-	// db, ¼­¹ö ¿¬µ¿¿ë À¯Àú¸®½ºÆ®¿Í ¼ÒÄÏ
-	UserInfo user = LoginController.UserList.get(0);
+	// db, ì„œë²„ ì—°ë™ìš© ìœ ì €ë¦¬ìŠ¤íŠ¸ì™€ ì†Œì¼“
+	static UserInfo user = LoginController.UserList.get(0);
 	DBConnector db = new DBConnector();
 	Socket socket;
 	
@@ -71,7 +71,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	private Media bgm;
 	private MediaPlayer mP;
 	
-	// user °´Ã¼¿¡ ÀúÀåµÇ¾îÀÖ´Â Á¡¼ö¿Í ·¹º§À» ¹Ş¾Æ¿À´Â º¯¼ö
+	// user ê°ì²´ì— ì €ì¥ë˜ì–´ìˆëŠ” ì ìˆ˜ì™€ ë ˆë²¨ì„ ë°›ì•„ì˜¤ëŠ” ë³€ìˆ˜
 	private int loveCount = user.getCaring();
 	private int lightCount = user.getTanning();
 	private int waterCount = user.getWatering();
@@ -90,8 +90,8 @@ public class Controller2 implements Initializable, ControlInterface {
 	private AnchorPane panehelp;
 	
 	
-	// ÀÌÀüÈ­¸é¿¡¼­ PlantName ³Ñ¾î¿À°Ô²û ¸¸µå´Â ¸Ş¼­µå
-	// ·¹º§µµ µ¿½Ã¿¡ ³Ñ¾î¿À¸é¼­ ¹Ù·Î ·¹º§ º° »çÁø µîÀå
+	// ì´ì „í™”ë©´ì—ì„œ PlantName ë„˜ì–´ì˜¤ê²Œë” ë§Œë“œëŠ” ë©”ì„œë“œ
+	// ë ˆë²¨ë„ ë™ì‹œì— ë„˜ì–´ì˜¤ë©´ì„œ ë°”ë¡œ ë ˆë²¨ ë³„ ì‚¬ì§„ ë“±ì¥
 	public void setPname(String pName) {
 		lbl_plantName.setText(user.getPlantName());
 		if(user.getLevel()>=3) {
@@ -113,7 +113,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		snailCount = user.getNutrition();
 		level = user.getLevel();
 	}
-	/////////////// ·¹º§º° ½Ä¹°, È¿°ú, »óÅÂ ÀÌ¹ÌÁö
+	/////////////// ë ˆë²¨ë³„ ì‹ë¬¼, íš¨ê³¼, ìƒíƒœ ì´ë¯¸ì§€
 	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/sf2.png"));
 	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/sf3.png"));
 	Image helpPage1 = new Image(getClass().getResourceAsStream("../View/css/help_1.png"));
@@ -145,7 +145,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		paneslide.setTranslateX(0);
 	}
 
-	/////////////// ºê±İ ¹× È¿°úÀ½
+	/////////////// ë¸Œê¸ˆ ë° íš¨ê³¼ìŒ
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -166,7 +166,7 @@ public class Controller2 implements Initializable, ControlInterface {
 			panehelp.setTranslateX(1000);
 		}
 
-		/////////////////// ºê±İ ¹× È¿°úÀ½
+		/////////////////// ë¸Œê¸ˆ ë° íš¨ê³¼ìŒ
 		bgm = new Media(songs.get(3).toURI().toString());
 		mP = new MediaPlayer(bgm);
 
@@ -356,7 +356,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	}
 
 
-	////////////////////////// 4°¡Áö ¹öÆ° ¾×¼Ç
+	////////////////////////// 4ê°€ì§€ ë²„íŠ¼ ì•¡ì…˜
 	public void waterAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		waterCount++;
@@ -374,7 +374,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 		
 	}
-	// »ç¶û¹öÆ°
+	// ì‚¬ë‘ë²„íŠ¼
 	public void loveAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		loveCount++;
@@ -406,7 +406,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	
 	
 	//127.0.0.1
-	//¼­¹ö on > thread¸¦ÅëÇØ > server Àü´Ş ¸Ş½ÃÁö ¼ö½Å
+	//ì„œë²„ on > threadë¥¼í†µí•´ > server ì „ë‹¬ ë©”ì‹œì§€ ìˆ˜ì‹ 
 	@FXML
 	public void serverOn(MouseEvent event) {
 		btn_serverOn.setVisible(false);
@@ -415,13 +415,13 @@ public class Controller2 implements Initializable, ControlInterface {
 			public void run() {
 				try {
 					socket = new Socket("127.0.0.1",user.getPort());
-					System.out.println("[¼ÒÄÏ ¿¬°á]");
+					System.out.println("[ì†Œì¼“ ì—°ê²°]");
 					receive();	
 				} catch (Exception e) {
 					if(!socket.isClosed()) {
 						try {
 							socket.close();
-							System.out.println("[¼­¹öÁ¢¼Ó ½ÇÆĞ]");
+							System.out.println("[ì„œë²„ì ‘ì† ì‹¤íŒ¨]");
 							Platform.exit();
 						} catch (IOException e1) {
 						
@@ -434,7 +434,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	// ¼­¹ö Á¾·á ¹öÆ°
+	// ì„œë²„ ì¢…ë£Œ ë²„íŠ¼
 	@FXML
 	public void serverOff(MouseEvent event) {
 		btn_serverOn.setVisible(true);
@@ -442,9 +442,9 @@ public class Controller2 implements Initializable, ControlInterface {
 		stopClient();
 	}
 
-	// ¼­¹ö¿¡¼­ ¼ö½ÅÇØ¿À´Â ¸Ş½ÃÁö
+	// ì„œë²„ì—ì„œ ìˆ˜ì‹ í•´ì˜¤ëŠ” ë©”ì‹œì§€
 	// send (thread) > thread > thread > receive
-	// receiveÇÏ°í UTF-8·Î TextArea·Î append
+	// receiveí•˜ê³  UTF-8ë¡œ TextAreaë¡œ append
 	public void receive() {
 		while(true) {
 			try {
@@ -453,7 +453,7 @@ public class Controller2 implements Initializable, ControlInterface {
 				int length = in.read(buffer);
 				while(length == -1) throw new IOException();
 				String message = new String(buffer, 0 , length, "UTF-8");			
-				System.out.println("[Å¬¶óÀÌ¾ğÆ® ¸Ş½ÃÁö ¼ö½Å ¼º°ø] : " +  message);
+				System.out.println("[í´ë¼ì´ì–¸íŠ¸ ë©”ì‹œì§€ ìˆ˜ì‹  ì„±ê³µ] : " +  message);
 				Platform.runLater(()->{
 					TextArea.appendText(message);
 				});
@@ -465,20 +465,20 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 	}
 	
-	// Àü¼Û ¹öÆ°
-	// sending ¸Ş¼­µåÀÇ ¸Å°³º¯¼ö·Î Àü´ŞÇÒ ¸Ş½ÃÁö¸¦ ´ã¾ÆÁØ´Ù.
+	// ì „ì†¡ ë²„íŠ¼
+	// sending ë©”ì„œë“œì˜ ë§¤ê°œë³€ìˆ˜ë¡œ ì „ë‹¬í•  ë©”ì‹œì§€ë¥¼ ë‹´ì•„ì¤€ë‹¤.
 	public void chatAction(ActionEvent e) {
 		
 		sending(user.getPlantName() + " : " + TextField.getText() + "\n");
-		System.out.println("[Å¬¶óÀÌ¾ğÆ® ¸Ş½ÃÁö Àü¼Û ¼º°ø] : " + user.getPlantName() +" : "+  TextField.getText());
+		System.out.println("[í´ë¼ì´ì–¸íŠ¸ ë©”ì‹œì§€ ì „ì†¡ ì„±ê³µ] : " + user.getPlantName() +" : "+  TextField.getText());
 		TextField.setText("");
 		TextField.requestFocus();
 		
 	}
 	
-	// ¼­¹ö ¸Ş½ÃÁö Àü¼Û ¸Ş¼­µå
+	// ì„œë²„ ë©”ì‹œì§€ ì „ì†¡ ë©”ì„œë“œ
 	// send (thread) > thread(serverClient in) > thread(serverClient out) > receive
-	// ÀÔ·ÂµÈ ¸Ş½ÃÁö¸¦ ¼­¹ö¿¡ Àü´Ş(UTF-8)
+	// ì…ë ¥ëœ ë©”ì‹œì§€ë¥¼ ì„œë²„ì— ì „ë‹¬(UTF-8)
 	public void sending(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -503,23 +503,23 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	//Å¬¶óÀÌ¾ğÆ® ÇÁ·Î±×·¥ Á¾·á ¸Ş¼­µå
+	//í´ë¼ì´ì–¸íŠ¸ í”„ë¡œê·¸ë¨ ì¢…ë£Œ ë©”ì„œë“œ
 	public void stopClient() {
 		try {
 			if(socket != null && !socket.isClosed()) {
 				socket.close();
-				System.out.println("[Å¬¶óÀÌ¾ğÆ® Á¢¼Ó Á¾·á]");
+				System.out.println("[í´ë¼ì´ì–¸íŠ¸ ì ‘ì† ì¢…ë£Œ]");
 			}
 		} catch (Exception e) {
-			System.out.println("[Å¬¶óÀÌ¾ğÆ® Á¾·á ¿À·ù]");
+			System.out.println("[í´ë¼ì´ì–¸íŠ¸ ì¢…ë£Œ ì˜¤ë¥˜]");
 			e.printStackTrace();
 		}
 		
 		
 	}
 	
-	// ³¯¾¾ ºÒ·¯¿À±â ¹öÆ°
-	// ³¯¾¾¸¦ Å©·ÑÇØ¿Í¼­ lbl text¸¦ set ÇØÁÜ.
+	// ë‚ ì”¨ ë¶ˆëŸ¬ì˜¤ê¸° ë²„íŠ¼
+	// ë‚ ì”¨ë¥¼ í¬ë¡¤í•´ì™€ì„œ lbl textë¥¼ set í•´ì¤Œ.
 	public void weatherAction(ActionEvent e) {
 		weatherVO wVO = new weatherVO();
 		try {
