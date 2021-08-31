@@ -102,41 +102,27 @@ public class Controller2 implements Initializable, ControlInterface {
 		}
 	}
 	
-	// 레벨업, 운세 등장시 dataRefresh
-	public void dataRefresh() throws SQLException {
-		
-		loveCount = 0;
-		waterCount = 0;
-		lightCount = 0;
-		snailCount = 0;
-		
-		user.setCaring(0);
-		user.setNutrition(0);
-		user.setTanning(0);
-		user.setWatering(0);
-		db.updateAll(user);
-	
+	private void execute(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
+		mainButtonService.execute(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,2);
 	}
 	
-	
+	public void setInfos() {
+		loveCount = user.getCaring();
+		lightCount = user.getTanning();
+		waterCount = user.getWatering();
+		snailCount = user.getNutrition();
+		level = user.getLevel();
+	}
 	/////////////// 레벨별 식물, 효과, 상태 이미지
 	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/sf2.png"));
 	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/sf3.png"));
-	Image waterEffect1 = new Image(getClass().getResourceAsStream("../View/css/waterEffect.png"));
-	Image lightEffect1 = new Image(getClass().getResourceAsStream("../View/css/lightEffect.png"));
-	Image loveEffect1 = new Image(getClass().getResourceAsStream("../View/css/loveEffect.png"));
-	Image snailEffect1 = new Image(getClass().getResourceAsStream("../View/css/snailEffect.png"));
-	Image chatBubble1 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_smile.png"));
-	Image chatBubble2 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_soso.png"));
-	Image chatBubble3 = new Image(getClass().getResourceAsStream("../View/css/chatBubble_angery.png"));
 	Image helpPage1 = new Image(getClass().getResourceAsStream("../View/css/help_1.png"));
 	Image helpPage2 = new Image(getClass().getResourceAsStream("../View/css/help_2.png"));
 	Image helpPage3 = new Image(getClass().getResourceAsStream("../View/css/help_3.png"));
 	Image helpPage4 = new Image(getClass().getResourceAsStream("../View/css/help_4.png"));
 	Image helpPage5 = new Image(getClass().getResourceAsStream("../View/css/help_5.png"));
 	
-	
-	
+
 	@FXML
 	public void hideSlide(MouseEvent event) {
 		TranslateTransition slide = new TranslateTransition();
@@ -363,271 +349,45 @@ public class Controller2 implements Initializable, ControlInterface {
 		mP.pause();
 	}
 	
-	
-	// 버튼클릭 시 랜덤 확률로 포츈쿠키 등장
-	public void fortunecookie() throws SQLException {
-
-		randRate = (int)(Math.random()*10 +1);	
-		
-		if(randRate < 3) {
-			
-			Alert oonseAlert = new Alert(AlertType.INFORMATION);
-			oonseAlert.setTitle("오늘의 한마디");
-			oonseAlert.setContentText(db.pickFortune());
-			oonseAlert.showAndWait();
-
-		}
-	}
-	
-	//light , water 버튼을 누를때마다 수행되는 메서드
-	//운세, 레벨업, 챗버블 등장
-	public void buttonPressing(int eachCount, String element, PauseTransition pause) throws SQLException {
-
-		int numberOfClicks = 0;
-		
-		if (element.equals("water")) {
-			numberOfClicks = 3;
-		} else if (element.equals("light")) {
-			numberOfClicks = 2;
-		}
-		
-		if (eachCount == numberOfClicks) {
-
-			chatBubbleView.setImage(chatBubble1);
-			pause.setOnFinished(a -> chatBubbleView.setImage(null));
-			pause.play();
-
-		} else if (eachCount == numberOfClicks+1) {
-
-			chatBubbleView.setImage(chatBubble2);
-			pause.setOnFinished(a -> chatBubbleView.setImage(null));
-			pause.play();
-
-		} else if (eachCount == numberOfClicks+2) {
-
-			chatBubbleView.setImage(chatBubble3);
-			pause.setOnFinished(a -> chatBubbleView.setImage(null));
-			pause.play();
-
-		} else if (20 < waterCount + lightCount + snailCount) {
-			dataRefresh();
-		} 
-		
-		// 레벨업 조건
-		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
-			
-			Alert oonseAlert = new Alert(AlertType.INFORMATION);
-			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
-				level++;
-				user.setLevel(level);
-				db.updateAll(user);
-				dataRefresh();
-
-				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
-				oonseAlert.showAndWait();
-			}else if(level > 3) {	
-				dataRefresh();
-				
-				oonseAlert.setTitle("성공");
-				oonseAlert.setContentText("식물이 잘 자랐어요!!!! 식물과 함께 즐거운 삶을 보내봐요");
-				oonseAlert.showAndWait();
-				
-			}
-
-		} 
-		
-		switch (level) {
-		case 2:
-			myPlantView.setImage(plantLevel2);
-			break;
-		case 3:
-			myPlantView.setImage(plantLevel3);
-			break;
-		}
-		
-	}
-	
 	public void audioClipping() {
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
 		m1.play();
 	}
 
+
 	////////////////////////// 4가지 버튼 액션
 	public void waterAction(ActionEvent e) throws SQLException {
-
 		audioClipping();
-
 		waterCount++;
-		waterEffect.setImage(waterEffect1);
-		
-		PauseTransition pause = new PauseTransition(Duration.seconds(1));
-		pause.setOnFinished(a -> waterEffect.setImage(null));
-		pause.play();
-		
-		fortunecookie();
-		buttonPressing(waterCount, "water", pause);
-		System.out.println(waterCount);
-		
-		
-		user.setWatering(waterCount);
-		db.updateAll(user);
+		execute(new WaterButtonImpl(), waterEffect, chatBubbleView);
+		setInfos();
 
-		
 	}
 	
 	
 	public void lightAction(ActionEvent e) throws SQLException {
 		audioClipping();
-
-		lightEffect.setImage(lightEffect1);
-
 		lightCount++;
-		System.out.println(lightCount);
-		
-		PauseTransition pause = new PauseTransition(Duration.seconds(1));
-		pause.setOnFinished(a -> lightEffect.setImage(null));
-		pause.play();
-		
-		fortunecookie();
-		buttonPressing(lightCount, "light", pause);
-		
-		user.setTanning(lightCount);
-		db.updateAll(user);
+		execute(new LightButtonImpl(), lightEffect, chatBubbleView);
+		setInfos();
 		
 		
 	}
 	// 사랑버튼
 	public void loveAction(ActionEvent e) throws SQLException {
-
 		audioClipping();
-
 		loveCount++;
-		
-		System.out.println(loveCount);
-		chatBubbleView.setImage(chatBubble1);
-		
-		loveEffect.setImage(loveEffect1);
-		
-		PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-		pause1.setOnFinished(a -> loveEffect.setImage(null));
-		pause1.play();
-		
-		PauseTransition pause = new PauseTransition(Duration.seconds(1));
-		pause.setOnFinished(a -> chatBubbleView.setImage(null));
-		pause.play();
-
-		fortunecookie();
-		
-		user.setCaring(loveCount);
-		db.updateAll(user);
-
-		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
-			dataRefresh();
-			
-			Alert oonseAlert = new Alert(AlertType.INFORMATION);
-			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
-				level++;
-				user.setLevel(level);
-				db.updateAll(user);
-				dataRefresh();
-
-				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
-				oonseAlert.showAndWait();
-			}else if(level > 3) {	
-				dataRefresh();
-				
-				oonseAlert.setTitle("성공");
-				oonseAlert.setContentText("식물이 잘 자랐어요!!!! 식물과 함께 즐거운 삶을 보내봐요");
-				oonseAlert.showAndWait();
-				
-			}
-			
-		} else if (20 < waterCount + lightCount + snailCount) {
-			dataRefresh();
-			
-		}
-		
-///////////////////레벨 오르면 이미지 변경
-		switch (level) {
-		case 2:
-			myPlantView.setImage(plantLevel2);
-			break;
-		case 3:
-			myPlantView.setImage(plantLevel3);
-			break;
-		
-		}
+		execute(new LoveButtonImpl(), loveEffect, chatBubbleView);
+		setInfos();
 		
 	}
 
 	public void snailAction(ActionEvent e) throws SQLException {
 		audioClipping();
-
 		snailCount++;
-		
-		snailEffect.setImage(snailEffect1);
-		
-		PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-		pause1.setOnFinished(a -> snailEffect.setImage(null));
-		pause1.play();
-		
-		fortunecookie();
-		
-		user.setNutrition(snailCount);
-		db.updateAll(user);
-		
-		
-		
-		if (waterCount == 3 && lightCount == 2 && loveCount >= 2 && snailCount == 1) {
-			
-			dataRefresh();
-			
-			Alert oonseAlert = new Alert(AlertType.INFORMATION);
-			oonseAlert.setTitle("레벨 업!");
-			if(level <= 3) {
-				level++;
-				user.setLevel(level);
-				db.updateAll(user);
-				dataRefresh();
-
-				oonseAlert.setContentText("레벨"+ level + " 로 오르셨습니다!");
-				oonseAlert.showAndWait();
-			}else if(level > 3) {	
-				dataRefresh();
-				
-				oonseAlert.setTitle("성공");
-				oonseAlert.setContentText("식물이 잘 자랐어요!!!! 식물과 함께 즐거운 삶을 보내봐요");
-				oonseAlert.showAndWait();
-				
-			}
-			
-		} else if (snailCount == 2) {
-			
-			snailCount = 1;
-			System.out.println("저 이제 배불러요");
-			chatBubbleView.setImage(chatBubble2);
-			PauseTransition pause = new PauseTransition(Duration.seconds(2));
-			pause.setOnFinished(a -> chatBubbleView.setImage(null));
-			pause.play();
-			
-		} else if (10 < waterCount + lightCount + snailCount) {
-			
-			dataRefresh();
-			
-		} 
-///////////////////레벨 오르면 이미지 변경
-		switch (level) {
-		case 2:
-			myPlantView.setImage(plantLevel2);
-			break;
-		case 3:
-			myPlantView.setImage(plantLevel3);
-			break;
-
-		}
+		execute(new SnailButtonImpl(), snailEffect, chatBubbleView);
+		setInfos();
 		
 	}
 	
@@ -775,4 +535,5 @@ public class Controller2 implements Initializable, ControlInterface {
 
 	}
 
+	
 }

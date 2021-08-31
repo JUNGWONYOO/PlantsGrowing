@@ -16,10 +16,6 @@ public interface ControlInterface  {
 	// 이전화면에서 PlantName 넘어오게끔 만드는 메서드
 	// 레벨도 동시에 넘어오면서 바로 레벨 별 사진 등장
 	public void setPname(String pName);
-	
-	// 레벨업, 운세 등장시 dataRefresh
-	public void dataRefresh() throws SQLException;
-	
 	@FXML
 	public void hideSlide(MouseEvent event);
 
@@ -47,29 +43,16 @@ public interface ControlInterface  {
 
 	public void helpTo3Prev(ActionEvent e);
 	public void helpTo4Prev(ActionEvent e);
-
-	
 	public void playMedia(ActionEvent e);
 
 	public void pauseMedia(ActionEvent e);
-	
-	// 버튼클릭 시 랜덤 확률로 포츈쿠키 등장
-	public void fortunecookie() throws SQLException;
-	
-	//light , water 버튼을 누를때마다 수행되는 메서드
-	//운세, 레벨업, 챗버블 등장
-	public void buttonPressing(int eachCount, String element, PauseTransition pause) throws SQLException;
-
-	////////////////////////// 4가지 버튼 액션
+	////// 4가지 버튼 액션
 	
 	public void audioClipping();
+	
 	public void waterAction(ActionEvent e) throws SQLException;
-
 	public void lightAction(ActionEvent e) throws SQLException;
-		
-	// 사랑버튼
 	public void loveAction(ActionEvent e) throws SQLException;
-
 	public void snailAction(ActionEvent e) throws SQLException;
 
 	public void goPrevious(ActionEvent e) throws IOException;
