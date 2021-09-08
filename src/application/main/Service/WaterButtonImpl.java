@@ -1,4 +1,4 @@
-package application.main.Controller;
+package application.main.Service;
 
 import java.sql.SQLException;
 
@@ -6,6 +6,8 @@ import application.Singletone;
 import application.dao.DBConnector;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
+import application.main.Controller.ControlInterface;
+import application.main.Controller.Controller;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -31,10 +33,10 @@ public class WaterButtonImpl extends MainButtonService{
 		else if (20 >= waterCount + lightCount + snailCount) {
 
 			System.out.println(waterCount);
-			Controller.user.setWatering(waterCount);
+			ControlInterface.user.setWatering(waterCount);
 			
 			try {
-				db.updateAll(Controller.user);
+				db.updateAll(ControlInterface.user);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -53,9 +55,9 @@ public class WaterButtonImpl extends MainButtonService{
 			if(level < 3) {
 				level++;
 				setImagePerLevel(myPlantView, level, controller);
-				Controller.user.setLevel(level);
+				ControlInterface.user.setLevel(level);
 				try {
-					db.updateAll(Controller.user);
+					db.updateAll(ControlInterface.user);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -16,6 +16,11 @@ import application.Singletone;
 import application.dao.DBConnector;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
+import application.main.Service.LightButtonImpl;
+import application.main.Service.LoveButtonImpl;
+import application.main.Service.MainButtonService;
+import application.main.Service.SnailButtonImpl;
+import application.main.Service.WaterButtonImpl;
 import application.main.weather.weatherCrawl;
 import application.main.weather.weatherVO;
 import javafx.animation.FadeTransition;
@@ -66,7 +71,7 @@ public class Controller implements Initializable, ControlInterface {
 	private ArrayList<File> songs;
 
 	// db, 서버 연동용 유저리스트와 소켓
-	static UserInfo user = LoginController.UserList.get(0);
+	static UserInfo user = ControlInterface.user;
 	DBConnector db = Singletone.getInstance();
 	Socket socket;
 	

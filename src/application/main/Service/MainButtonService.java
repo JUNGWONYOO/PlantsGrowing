@@ -1,9 +1,11 @@
-package application.main.Controller;
+package application.main.Service;
 
 import java.sql.SQLException;
 
 import application.Singletone;
 import application.dao.DBConnector;
+import application.main.Controller.ControlInterface;
+import application.main.Controller.Controller;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -73,13 +75,13 @@ public abstract class MainButtonService {
 		lightCount = 0;
 		snailCount = 0;
 		
-		Controller.user.setCaring(0);
-		Controller.user.setNutrition(0);
-		Controller.user.setTanning(0);
-		Controller.user.setWatering(0);
+		ControlInterface.user.setCaring(0);
+		ControlInterface.user.setNutrition(0);
+		ControlInterface.user.setTanning(0);
+		ControlInterface.user.setWatering(0);
 		
 		try {
-			db.updateAll(Controller.user);
+			db.updateAll(ControlInterface.user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

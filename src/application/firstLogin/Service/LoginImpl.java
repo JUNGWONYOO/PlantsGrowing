@@ -1,9 +1,10 @@
-package application.firstLogin.Controller;
+package application.firstLogin.Service;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import application.Singletone;
 import application.dao.DBConnector;
+import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.ControlInterface;
 import javafx.fxml.FXMLLoader;

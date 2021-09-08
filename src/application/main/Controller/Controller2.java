@@ -13,6 +13,11 @@ import java.util.ResourceBundle;
 import application.dao.DBConnector;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
+import application.main.Service.LightButtonImpl;
+import application.main.Service.LoveButtonImpl;
+import application.main.Service.MainButtonService;
+import application.main.Service.SnailButtonImpl;
+import application.main.Service.WaterButtonImpl;
 import application.main.weather.weatherCrawl;
 import application.main.weather.weatherVO;
 import javafx.animation.FadeTransition;
@@ -44,7 +49,7 @@ import javafx.scene.control.TextArea;
 
 public class Controller2 implements Initializable, ControlInterface {
 
-	/////////////// ImageView = 그림 틀
+	/////////////// ImageView = 洹몃┝ ��
 	@FXML
 	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect,helpView;
 	@FXML
@@ -62,8 +67,8 @@ public class Controller2 implements Initializable, ControlInterface {
 	private File[] files;
 	private ArrayList<File> songs;
 
-	// db, 서버 연동용 유저리스트와 소켓
-	static UserInfo user = LoginController.UserList.get(0);
+	// db, ��踰� �곕���� ����由ъ�ㅽ�몄�� ��耳�
+	static UserInfo user = ControlInterface.user;
 	DBConnector db = new DBConnector();
 	Socket socket;
 	
@@ -71,7 +76,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	private Media bgm;
 	private MediaPlayer mP;
 	
-	// user 객체에 저장되어있는 점수와 레벨을 받아오는 변수
+	// user 媛�泥댁�� ���λ���댁���� ������ ��踰⑥�� 諛����ㅻ�� 蹂���
 	private int loveCount = user.getCaring();
 	private int lightCount = user.getTanning();
 	private int waterCount = user.getWatering();
@@ -90,8 +95,8 @@ public class Controller2 implements Initializable, ControlInterface {
 	private AnchorPane panehelp;
 	
 	
-	// 이전화면에서 PlantName 넘어오게끔 만드는 메서드
-	// 레벨도 동시에 넘어오면서 바로 레벨 별 사진 등장
+	// �댁����硫댁���� PlantName ���댁�ㅺ��� 留����� 硫�����
+	// ��踰⑤�� ������ ���댁�ㅻ㈃�� 諛�濡� ��踰� 蹂� �ъ� �깆��
 	public void setPname(String pName) {
 		lbl_plantName.setText(user.getPlantName());
 		if(user.getLevel()>=3) {
@@ -113,7 +118,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		snailCount = user.getNutrition();
 		level = user.getLevel();
 	}
-	/////////////// 레벨별 식물, 효과, 상태 이미지
+	/////////////// ��踰⑤� ��臾�, �④낵, ���� �대�몄�
 	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/sf2.png"));
 	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/sf3.png"));
 	Image helpPage1 = new Image(getClass().getResourceAsStream("../View/css/help_1.png"));
@@ -145,7 +150,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		paneslide.setTranslateX(0);
 	}
 
-	/////////////// 브금 및 효과음
+	/////////////// 釉�湲� 諛� �④낵��
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -166,7 +171,7 @@ public class Controller2 implements Initializable, ControlInterface {
 			panehelp.setTranslateX(1000);
 		}
 
-		/////////////////// 브금 및 효과음
+		/////////////////// 釉�湲� 諛� �④낵��
 		bgm = new Media(songs.get(3).toURI().toString());
 		mP = new MediaPlayer(bgm);
 
@@ -356,7 +361,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	}
 
 
-	////////////////////////// 4가지 버튼 액션
+	////////////////////////// 4媛�吏� 踰��� �≪��
 	public void waterAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		waterCount++;
@@ -374,7 +379,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 		
 	}
-	// 사랑버튼
+	// �щ��踰���
 	public void loveAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		loveCount++;
@@ -406,7 +411,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	
 	
 	//127.0.0.1
-	//서버 on > thread를통해 > server 전달 메시지 수신
+	//��踰� on > thread瑜쇳�듯�� > server ���� 硫���吏� ����
 	@FXML
 	public void serverOn(MouseEvent event) {
 		btn_serverOn.setVisible(false);
@@ -415,13 +420,13 @@ public class Controller2 implements Initializable, ControlInterface {
 			public void run() {
 				try {
 					socket = new Socket("127.0.0.1",user.getPort());
-					System.out.println("[소켓 연결]");
+					System.out.println("[��耳� �곌껐]");
 					receive();	
 				} catch (Exception e) {
 					if(!socket.isClosed()) {
 						try {
 							socket.close();
-							System.out.println("[서버접속 실패]");
+							System.out.println("[��踰����� �ㅽ��]");
 							Platform.exit();
 						} catch (IOException e1) {
 						
@@ -434,7 +439,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	// 서버 종료 버튼
+	// ��踰� 醫�猷� 踰���
 	@FXML
 	public void serverOff(MouseEvent event) {
 		btn_serverOn.setVisible(true);
@@ -442,9 +447,9 @@ public class Controller2 implements Initializable, ControlInterface {
 		stopClient();
 	}
 
-	// 서버에서 수신해오는 메시지
+	// ��踰����� �����댁�ㅻ�� 硫���吏�
 	// send (thread) > thread > thread > receive
-	// receive하고 UTF-8로 TextArea로 append
+	// receive��怨� UTF-8濡� TextArea濡� append
 	public void receive() {
 		while(true) {
 			try {
@@ -453,7 +458,7 @@ public class Controller2 implements Initializable, ControlInterface {
 				int length = in.read(buffer);
 				while(length == -1) throw new IOException();
 				String message = new String(buffer, 0 , length, "UTF-8");			
-				System.out.println("[클라이언트 메시지 수신 성공] : " +  message);
+				System.out.println("[�대�쇱�댁�명�� 硫���吏� ���� �깃났] : " +  message);
 				Platform.runLater(()->{
 					TextArea.appendText(message);
 				});
@@ -465,20 +470,20 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 	}
 	
-	// 전송 버튼
-	// sending 메서드의 매개변수로 전달할 메시지를 담아준다.
+	// ���� 踰���
+	// sending 硫������� 留ㅺ�蹂���濡� ���ы�� 硫���吏�瑜� �댁��以���.
 	public void chatAction(ActionEvent e) {
 		
 		sending(user.getPlantName() + " : " + TextField.getText() + "\n");
-		System.out.println("[클라이언트 메시지 전송 성공] : " + user.getPlantName() +" : "+  TextField.getText());
+		System.out.println("[�대�쇱�댁�명�� 硫���吏� ���� �깃났] : " + user.getPlantName() +" : "+  TextField.getText());
 		TextField.setText("");
 		TextField.requestFocus();
 		
 	}
 	
-	// 서버 메시지 전송 메서드
+	// ��踰� 硫���吏� ���� 硫�����
 	// send (thread) > thread(serverClient in) > thread(serverClient out) > receive
-	// 입력된 메시지를 서버에 전달(UTF-8)
+	// ���λ�� 硫���吏�瑜� ��踰��� ����(UTF-8)
 	public void sending(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -503,23 +508,23 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	//클라이언트 프로그램 종료 메서드
+	//�대�쇱�댁�명�� ��濡�洹몃�� 醫�猷� 硫�����
 	public void stopClient() {
 		try {
 			if(socket != null && !socket.isClosed()) {
 				socket.close();
-				System.out.println("[클라이언트 접속 종료]");
+				System.out.println("[�대�쇱�댁�명�� ���� 醫�猷�]");
 			}
 		} catch (Exception e) {
-			System.out.println("[클라이언트 종료 오류]");
+			System.out.println("[�대�쇱�댁�명�� 醫�猷� �ㅻ�]");
 			e.printStackTrace();
 		}
 		
 		
 	}
 	
-	// 날씨 불러오기 버튼
-	// 날씨를 크롤해와서 lbl text를 set 해줌.
+	// ���� 遺��ъ�ㅺ린 踰���
+	// ���⑤�� �щ·�댁���� lbl text瑜� set �댁�.
 	public void weatherAction(ActionEvent e) {
 		weatherVO wVO = new weatherVO();
 		try {

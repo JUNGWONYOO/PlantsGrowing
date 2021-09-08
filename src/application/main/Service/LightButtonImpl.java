@@ -1,9 +1,11 @@
-package application.main.Controller;
+package application.main.Service;
 
 import java.sql.SQLException;
 
 import application.Singletone;
 import application.dao.DBConnector;
+import application.main.Controller.ControlInterface;
+import application.main.Controller.Controller;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -30,10 +32,10 @@ public class LightButtonImpl extends MainButtonService{
 		else if (20 >= waterCount + lightCount + snailCount) {
 
 			System.out.println(lightCount); // 로그 찍기
-			Controller.user.setTanning(lightCount); // 라이트 카운트 개수 업데이트 
+			ControlInterface.user.setTanning(lightCount); // 라이트 카운트 개수 업데이트 
 			
 			try {
-				db.updateAll(Controller.user);
+				db.updateAll(ControlInterface.user);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -53,9 +55,9 @@ public class LightButtonImpl extends MainButtonService{
 			if(level < 3) {
 				level++;
 				setImagePerLevel(myPlantView, level, controller);
-				Controller.user.setLevel(level);
+				ControlInterface.user.setLevel(level);
 				try {
-					db.updateAll(Controller.user);
+					db.updateAll(ControlInterface.user);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

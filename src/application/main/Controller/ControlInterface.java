@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import application.firstLogin.Controller.LoginController;
+import application.firstLogin.Users.UserInfo;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -49,6 +52,8 @@ public interface ControlInterface  {
 	////// 4가지 버튼 액션
 	
 	public void audioClipping();
+	
+	public static UserInfo user = LoginController.UserList.get(0);
 	
 	public void waterAction(ActionEvent e) throws SQLException;
 	public void lightAction(ActionEvent e) throws SQLException;

@@ -1,4 +1,4 @@
-package application.firstLogin.Controller;
+package application.firstLogin.Service;
 
 import java.io.IOException;
 import java.net.InetAddress;

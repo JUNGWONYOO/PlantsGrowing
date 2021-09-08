@@ -1,4 +1,4 @@
-package application.firstLogin.Controller;
+package application.firstLogin.Service;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
