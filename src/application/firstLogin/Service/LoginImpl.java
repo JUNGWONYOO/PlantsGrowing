@@ -3,7 +3,7 @@ package application.firstLogin.Service;
 import java.io.IOException;
 import java.sql.SQLException;
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.ControlInterface;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 public class LoginImpl implements LoginService {
 
-	DBConnector db = Singletone.getInstance(); // DB연동 생성자
+	PlantsGrowingDaoImple db = Singletone.getInstance(); // DB연동 생성자
 	
 	// 로그인
 	@Override

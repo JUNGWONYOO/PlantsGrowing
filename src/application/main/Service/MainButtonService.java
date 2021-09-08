@@ -3,7 +3,7 @@ package application.main.Service;
 import java.sql.SQLException;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.main.Controller.ControlInterface;
 import application.main.Controller.Controller;
 import javafx.scene.control.Alert;
@@ -21,7 +21,7 @@ public abstract class MainButtonService {
 	Image lightEffect1 = new Image(getClass().getResourceAsStream("../View/css/lightEffect.png"));
 	Image loveEffect1 = new Image(getClass().getResourceAsStream("../View/css/loveEffect.png"));
 	Image waterEffect1 = new Image(getClass().getResourceAsStream("../View/css/waterEffect.png"));
-	DBConnector db = Singletone.getInstance();
+	PlantsGrowingDaoImple db = Singletone.getInstance();
 	
 	// 버튼 클릭 시 실행 메서드
 	public abstract void execute(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller);

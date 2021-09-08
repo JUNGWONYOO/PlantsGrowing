@@ -3,7 +3,7 @@ package application.firstLogin.Service;
 import java.io.IOException;
 import java.net.InetAddress;
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Users.UserInfo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class CreateIdImpl implements LoginService {
-	DBConnector db = Singletone.getInstance(); // DB 싱글턴 생성
+	PlantsGrowingDaoImple db = Singletone.getInstance(); // DB 싱글턴 생성
 	
 	// 회원가입
 	@Override

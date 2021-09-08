@@ -3,7 +3,7 @@ package application.main.Service;
 import java.sql.SQLException;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.main.Controller.ControlInterface;
 import application.main.Controller.Controller;
 import javafx.animation.PauseTransition;
@@ -15,7 +15,7 @@ import javafx.util.Duration;
 
 public class LoveButtonImpl extends MainButtonService{
 
-	DBConnector db = Singletone.getInstance();
+	PlantsGrowingDaoImple db = Singletone.getInstance();
 	
 	// 총 실행 메서드
 	@Override

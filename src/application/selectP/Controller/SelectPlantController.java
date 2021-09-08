@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import javafx.event.ActionEvent;
@@ -36,7 +36,7 @@ public class SelectPlantController {
 	private Button sf1;
 	
 	UserInfo user = LoginController.UserList.get(0);
-	DBConnector db = new DBConnector();
+	PlantsGrowingDaoImple db = new PlantsGrowingDaoImple();
 	
 	public void Alert1(ActionEvent event) throws IOException, SQLException { //Cherry tomato button을 클릭했을 때
 

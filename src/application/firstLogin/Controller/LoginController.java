@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.security.auth.login.AppConfigurationEntry;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Service.CreateIdImpl;
 import application.firstLogin.Service.LoginImpl;
 import application.firstLogin.Service.LoginService;
@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 
 public class LoginController {
 	
-	DBConnector db = Singletone.getInstance();// DB연동 생성자
+	PlantsGrowingDaoImple db = Singletone.getInstance();// DB연동 생성자
 
 	@FXML
 	private Button btn;

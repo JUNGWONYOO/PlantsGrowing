@@ -3,23 +3,17 @@ package application.dao;
 import java.sql.*;
 
 import application.firstLogin.Users.UserInfo;
+import common.JdbcTemplate;
 
+import static common.JdbcTemplate.*;
 
-public class DBConnector {
+public class PlantsGrowingDaoImple {
 	
 	private Connection conn = null;
 	private Statement st = null;
 	private ResultSet rs = null;
 	private PreparedStatement psmt = null;
-	
-	public Connection getConnection() throws SQLException {	
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return DriverManager.getConnection("jdbc:mysql://localhost/plantgrowing?autoReconnect=true", "root", "1234");
-	}
+
 	
 	// ID 로그인 시 ID Password 가 맞는지 확인
 	// sql문 작성하여 Statement로 보내주고, ResultSet으로 결과 받아줌
@@ -37,7 +31,11 @@ public class DBConnector {
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 check 검색 오류 : "  + e.getMessage());
 		}finally {
-			close(conn, rs, st, psmt);
+			
+			close(rs);
+			close(st);
+			close(conn);
+			
 		}
 		return false;
 	}
@@ -54,13 +52,14 @@ public class DBConnector {
 				System.out.println("[중복된 id] 데이터 베이스 check 완료: " + ID);
 				return true;
 			}
-				// 커밋	
+				
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 checkDuplicate 검색 오류 : "  + e.getMessage());
-			// 롤 백
+			
 		}finally {
-			close(conn, rs, st, psmt);
-			// 역순 close
+			close(rs);
+			close(st);
+			close(conn);
 		}
 		return false;
 	}
@@ -79,13 +78,18 @@ public class DBConnector {
 			psmt.setString(3, userInfo.getIP());
 			psmt.setInt(4, userInfo.getPort());
 			psmt.executeUpdate();
-			
+
+			commit(conn);
+
 			System.out.println("[계정생성 완료] id = " + userInfo.getId() +" pw = " + userInfo.getPassword());
 		} catch(SQLException se) {
 			System.out.println("계정 생성 오류");
+			rollBack(conn);
 			se.printStackTrace();
 		} finally {
-			close(conn, rs, st, psmt);
+
+			close(psmt);
+			close(conn);
 		}
 	}
 	
@@ -99,14 +103,19 @@ public class DBConnector {
 			psmt.setInt(1, userInfo.getSpecies());
 			psmt.setString(2, userInfo.getId());
 			psmt.executeUpdate();
-			
+
+			commit(conn);
+
 			System.out.printf("데이터 업데이트 완료[id = %1s / plantName = %1s] \n",
 								userInfo.getId(), userInfo.getSpecies() );
 		} catch(SQLException se) {
 			System.out.println("식물 종 업데이트 오류");
+			rollBack(conn);
 			se.printStackTrace();
 		} finally {
-			close(conn, rs, st, psmt);
+			
+			close(psmt);
+			close(conn);
 		}
 	}
 	
@@ -122,13 +131,18 @@ public class DBConnector {
 			psmt.setString(2, userInfo.getId());
 			psmt.executeUpdate();
 			
+			commit(conn);
+			
 			System.out.printf("데이터 업데이트 완료[id = %1s / plantName = %1s] \n",
 								userInfo.getId(), userInfo.getPlantName() );
 		} catch(SQLException se) {
 			System.out.println("식물 이름 업데이트 오류");
+			rollBack(conn);
 			se.printStackTrace();
 		}finally {
-			close(conn, rs, st, psmt);
+			
+			close(psmt);
+			close(conn);
 		}
 	}
 
@@ -145,15 +159,18 @@ public class DBConnector {
 			psmt.setInt(4, userInfo.getNutrition());
 			psmt.setInt(5, userInfo.getLevel());
 			psmt.setString(6, userInfo.getPlantName());
-			psmt.executeUpdate();
+			
+			commit(conn);
 			
 			System.out.printf("데이터 업데이트 완료[id = %1s] 물 = %1d 사랑 = %1d 햇빛 = %1d 양분 = %1d \n",
 								userInfo.getId(), userInfo.getWatering(), userInfo.getCaring(), userInfo.getTanning(), userInfo.getNutrition() );
 		} catch(SQLException se) {
 			System.out.println("데이터 업데이트 오류");
+			rollBack(conn);
 			se.printStackTrace();
 		} finally {
-			close(conn, rs, st, psmt);
+			close(psmt);
+			close(conn);
 		}
 	}
 	
@@ -188,7 +205,9 @@ public class DBConnector {
 			System.out.println("데이터 불러오기 오류");
 			e.printStackTrace();
 		}finally {
-			close(conn, rs, st, psmt);
+			close(rs);
+			close(st);
+			close(conn);
 		}
 	}
 	
@@ -210,31 +229,14 @@ public class DBConnector {
 		}catch(Exception e) {
 			System.out.println("운세가져오기 오류");
 		}finally {
-			close(conn, rs, st, psmt);
+			close(rs);
+			close(st);
+			close(conn);
 		}
 		return "잘 지내봐요";
 	}
 	
-	public void close(Connection conn, ResultSet rs, Statement st, PreparedStatement psmt ) {
-		
-		try {
-			if(conn != null) {
-			conn.close();
-			}
-			if(rs != null) {
-				rs.close();
-			}
-			if(st != null) {
-				st.close();
-			}
-			if(psmt != null) {
-				psmt.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
+	
 	
 }
 //Connection conn = null;

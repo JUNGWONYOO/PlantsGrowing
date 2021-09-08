@@ -3,20 +3,21 @@ package application.main.Service;
 import java.sql.SQLException;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.main.Controller.ControlInterface;
 import application.main.Controller.Controller;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class LightButtonImpl extends MainButtonService{
 
-	DBConnector db = Singletone.getInstance();
-	
+	PlantsGrowingDaoImple db = Singletone.getInstance();
+
 	// 총 실행 메서드
 	@Override
 	public void execute(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller) {
@@ -41,8 +42,6 @@ public class LightButtonImpl extends MainButtonService{
 			}
 		}
 		leveling(loveCount, lightCount, waterCount, snailCount, level, plantView, controller);
-		
-		
 	}
 	
 	// 레벨업 기준과 레벨업 메서드

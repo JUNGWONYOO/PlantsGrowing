@@ -1,15 +1,15 @@
 package application;
 
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 
 public class Singletone {
 	
-	private static final DBConnector instance = new DBConnector();
+	private static final PlantsGrowingDaoImple instance = new PlantsGrowingDaoImple();
 	
 	private Singletone() {
 		
 	}
-	public static DBConnector getInstance() {
+	public static PlantsGrowingDaoImple getInstance() {
 		return instance;
 	}
 

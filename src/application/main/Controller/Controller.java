@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import javax.sound.midi.ControllerEventListener;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Service.LightButtonImpl;
@@ -72,7 +72,7 @@ public class Controller implements Initializable, ControlInterface {
 
 	// db, 서버 연동용 유저리스트와 소켓
 	static UserInfo user = ControlInterface.user;
-	DBConnector db = Singletone.getInstance();
+	PlantsGrowingDaoImple db = Singletone.getInstance();
 	Socket socket;
 	
 
@@ -461,6 +461,7 @@ public class Controller implements Initializable, ControlInterface {
 				String message = new String(buffer, 0 , length, "UTF-8");			
 				System.out.println("[클라이언트 메시지 수신 성공] : " +  message);
 				Platform.runLater(()->{
+					
 					TextArea.appendText(message);
 				});
 			}catch (Exception e) {

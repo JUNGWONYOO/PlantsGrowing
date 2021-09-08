@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.Controller;
@@ -36,7 +36,7 @@ public class CreateNameController {
 	private Button btn;
 	
 	UserInfo user = LoginController.UserList.get(0);
-	DBConnector db = new DBConnector();
+	PlantsGrowingDaoImple db = new PlantsGrowingDaoImple();
 	
 	public void login(ActionEvent event) throws IOException, SQLException {
 

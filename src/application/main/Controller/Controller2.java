@@ -10,7 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import application.dao.DBConnector;
+import javax.sound.midi.ControllerEventListener;
+
+import application.Singletone;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Service.LightButtonImpl;
@@ -48,8 +51,8 @@ import javafx.util.Duration;
 import javafx.scene.control.TextArea;
 
 public class Controller2 implements Initializable, ControlInterface {
-
-	/////////////// ImageView = æ´¹ëªƒâ” ï¿½ï¿½
+	
+	/////////////// ImageView = ±×¸² Æ²
 	@FXML
 	private ImageView myPlantView, waterEffect, chatBubbleView, lightEffect,loveEffect, snailEffect,helpView;
 	@FXML
@@ -67,22 +70,21 @@ public class Controller2 implements Initializable, ControlInterface {
 	private File[] files;
 	private ArrayList<File> songs;
 
-	// db, ï¿½ï¿½è¸°ï¿½ ï¿½ê³•ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ç”±ÑŠï¿½ã…½ï¿½ëª„ï¿½ï¿½ ï¿½ï¿½è€³ï¿½
+	// db, ¼­¹ö ¿¬µ¿¿ë À¯Àú¸®½ºÆ®¿Í ¼ÒÄÏ
 	static UserInfo user = ControlInterface.user;
-	DBConnector db = new DBConnector();
+	PlantsGrowingDaoImple db = Singletone.getInstance();
 	Socket socket;
 	
 
 	private Media bgm;
 	private MediaPlayer mP;
 	
-	// user åª›ï¿½ï§£ëŒï¿½ï¿½ ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ëŒï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½è¸°â‘¥ï¿½ï¿½ è«›ï¿½ï¿½ï¿½ï¿½ã…»ï¿½ï¿½ è¹‚ï¿½ï¿½ï¿½
+	// user °´Ã¼¿¡ ÀúÀåµÇ¾îÀÖ´Â Á¡¼ö¿Í ·¹º§À» ¹Ş¾Æ¿À´Â º¯¼ö
 	private int loveCount = user.getCaring();
 	private int lightCount = user.getTanning();
 	private int waterCount = user.getWatering();
 	private int snailCount = user.getNutrition();
 	private int level = user.getLevel();
-	private int randRate = 0;
 
 	@FXML
 	private TextField TextField;
@@ -90,13 +92,12 @@ public class Controller2 implements Initializable, ControlInterface {
 	private TextArea TextArea;
 	@FXML
 	private AnchorPane paneslide;
-	
 	@FXML
 	private AnchorPane panehelp;
 	
 	
-	// ï¿½ëŒï¿½ï¿½ï¿½ï¿½ï§ëŒï¿½ï¿½ï¿½ï¿½ PlantName ï¿½ï¿½ï¿½ëŒï¿½ã…ºï¿½ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï¿½ï¿½
-	// ï¿½ï¿½è¸°â‘¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ëŒï¿½ã…»ãˆƒï¿½ï¿½ è«›ï¿½æ¿¡ï¿½ ï¿½ï¿½è¸°ï¿½ è¹‚ï¿½ ï¿½ÑŠï¿½ ï¿½ê¹†ï¿½ï¿½
+	// ÀÌÀüÈ­¸é¿¡¼­ PlantName ³Ñ¾î¿À°Ô²û ¸¸µå´Â ¸Ş¼­µå
+	// ·¹º§µµ µ¿½Ã¿¡ ³Ñ¾î¿À¸é¼­ ¹Ù·Î ·¹º§ º° »çÁø µîÀå
 	public void setPname(String pName) {
 		lbl_plantName.setText(user.getPlantName());
 		if(user.getLevel()>=3) {
@@ -106,19 +107,8 @@ public class Controller2 implements Initializable, ControlInterface {
 			myPlantView.setImage(plantLevel2);
 		}
 	}
-	
-	private void execute(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
-		mainButtonService.execute(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,2);
-	}
-	
-	public void setInfos() {
-		loveCount = user.getCaring();
-		lightCount = user.getTanning();
-		waterCount = user.getWatering();
-		snailCount = user.getNutrition();
-		level = user.getLevel();
-	}
-	/////////////// ï¿½ï¿½è¸°â‘¤ï¿½ ï¿½ï¿½è‡¾ï¿½, ï¿½â‘£ë‚µ, ï¿½ï¿½ï¿½ï¿½ ï¿½ëŒ€ï¿½ëª„ï¿½
+
+	/////////////// ·¹º§º° ½Ä¹°, È¿°ú, »óÅÂ ÀÌ¹ÌÁö
 	Image plantLevel2 = new Image(getClass().getResourceAsStream("../View/css/sf2.png"));
 	Image plantLevel3 = new Image(getClass().getResourceAsStream("../View/css/sf3.png"));
 	Image helpPage1 = new Image(getClass().getResourceAsStream("../View/css/help_1.png"));
@@ -127,7 +117,8 @@ public class Controller2 implements Initializable, ControlInterface {
 	Image helpPage4 = new Image(getClass().getResourceAsStream("../View/css/help_4.png"));
 	Image helpPage5 = new Image(getClass().getResourceAsStream("../View/css/help_5.png"));
 	
-
+	
+	
 	@FXML
 	public void hideSlide(MouseEvent event) {
 		TranslateTransition slide = new TranslateTransition();
@@ -150,7 +141,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		paneslide.setTranslateX(0);
 	}
 
-	/////////////// é‡‰ï¿½æ¹²ï¿½ è«›ï¿½ ï¿½â‘£ë‚µï¿½ï¿½
+	/////////////// ºê±İ ¹× È¿°úÀ½
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -171,8 +162,8 @@ public class Controller2 implements Initializable, ControlInterface {
 			panehelp.setTranslateX(1000);
 		}
 
-		/////////////////// é‡‰ï¿½æ¹²ï¿½ è«›ï¿½ ï¿½â‘£ë‚µï¿½ï¿½
-		bgm = new Media(songs.get(3).toURI().toString());
+		/////////////////// ºê±İ ¹× È¿°úÀ½
+		bgm = new Media(songs.get(4).toURI().toString());
 		mP = new MediaPlayer(bgm);
 
 	}
@@ -339,7 +330,6 @@ public class Controller2 implements Initializable, ControlInterface {
 		btn_helpNxt6.setVisible(false);
 	}
 
-
 	public void playMedia(ActionEvent e) {
 		mP.setVolume(0.1);
 		mP.setOnEndOfMedia(new Runnable() {
@@ -354,14 +344,25 @@ public class Controller2 implements Initializable, ControlInterface {
 		mP.pause();
 	}
 	
+	private void execute(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
+		mainButtonService.execute(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,1);
+	}
+	
+	public void setInfos() {
+		loveCount = user.getCaring();
+		lightCount = user.getTanning();
+		waterCount = user.getWatering();
+		snailCount = user.getNutrition();
+		level = user.getLevel();
+	}
+	
 	public void audioClipping() {
 		AudioClip m1 = new AudioClip(songs.get(1).toURI().toString());
 		m1.setVolume(0.1);
 		m1.play();
 	}
 
-
-	////////////////////////// 4åª›ï¿½ï§ï¿½ è¸°ï¿½ï¿½ï¿½ ï¿½â‰ªï¿½ï¿½
+	////////////////////////// 4°¡Áö ¹öÆ° ¾×¼Ç
 	public void waterAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		waterCount++;
@@ -379,7 +380,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 		
 	}
-	// ï¿½Ñ‰ï¿½ï¿½è¸°ï¿½ï¿½ï¿½
+	// »ç¶û¹öÆ°
 	public void loveAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		loveCount++;
@@ -411,7 +412,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	
 	
 	//127.0.0.1
-	//ï¿½ï¿½è¸°ï¿½ on > threadç‘œì‡³ï¿½ë“¯ï¿½ï¿½ > server ï¿½ï¿½ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//¼­¹ö on > thread¸¦ÅëÇØ > server Àü´Ş ¸Ş½ÃÁö ¼ö½Å
 	@FXML
 	public void serverOn(MouseEvent event) {
 		btn_serverOn.setVisible(false);
@@ -420,13 +421,13 @@ public class Controller2 implements Initializable, ControlInterface {
 			public void run() {
 				try {
 					socket = new Socket("127.0.0.1",user.getPort());
-					System.out.println("[ï¿½ï¿½è€³ï¿½ ï¿½ê³Œê»]");
+					System.out.println("[¼ÒÄÏ ¿¬°á]");
 					receive();	
 				} catch (Exception e) {
 					if(!socket.isClosed()) {
 						try {
 							socket.close();
-							System.out.println("[ï¿½ï¿½è¸°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ã…½ï¿½ï¿½]");
+							System.out.println("[¼­¹öÁ¢¼Ó ½ÇÆĞ]");
 							Platform.exit();
 						} catch (IOException e1) {
 						
@@ -439,7 +440,7 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	// ï¿½ï¿½è¸°ï¿½ é†«ï¿½çŒ·ï¿½ è¸°ï¿½ï¿½ï¿½
+	// ¼­¹ö Á¾·á ¹öÆ°
 	@FXML
 	public void serverOff(MouseEvent event) {
 		btn_serverOn.setVisible(true);
@@ -447,9 +448,9 @@ public class Controller2 implements Initializable, ControlInterface {
 		stopClient();
 	}
 
-	// ï¿½ï¿½è¸°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ëŒï¿½ã…»ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½
+	// ¼­¹ö¿¡¼­ ¼ö½ÅÇØ¿À´Â ¸Ş½ÃÁö
 	// send (thread) > thread > thread > receive
-	// receiveï¿½ï¿½æ€¨ï¿½ UTF-8æ¿¡ï¿½ TextAreaæ¿¡ï¿½ append
+	// receiveÇÏ°í UTF-8·Î TextArea·Î append
 	public void receive() {
 		while(true) {
 			try {
@@ -458,8 +459,9 @@ public class Controller2 implements Initializable, ControlInterface {
 				int length = in.read(buffer);
 				while(length == -1) throw new IOException();
 				String message = new String(buffer, 0 , length, "UTF-8");			
-				System.out.println("[ï¿½ëŒ€ï¿½ì‡±ï¿½ëŒï¿½ëª…ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ê¹ƒë‚¬] : " +  message);
+				System.out.println("[Å¬¶óÀÌ¾ğÆ® ¸Ş½ÃÁö ¼ö½Å ¼º°ø] : " +  message);
 				Platform.runLater(()->{
+					
 					TextArea.appendText(message);
 				});
 			}catch (Exception e) {
@@ -470,20 +472,20 @@ public class Controller2 implements Initializable, ControlInterface {
 		
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½ è¸°ï¿½ï¿½ï¿½
-	// sending ï§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï§ã…ºï¿½è¹‚ï¿½ï¿½ï¿½æ¿¡ï¿½ ï¿½ï¿½ï¿½Ñ‹ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ç‘œï¿½ ï¿½ëŒï¿½ï¿½ä»¥ï¿½ï¿½ï¿½.
+	// Àü¼Û ¹öÆ°
+	// sending ¸Ş¼­µåÀÇ ¸Å°³º¯¼ö·Î Àü´ŞÇÒ ¸Ş½ÃÁö¸¦ ´ã¾ÆÁØ´Ù.
 	public void chatAction(ActionEvent e) {
 		
 		sending(user.getPlantName() + " : " + TextField.getText() + "\n");
-		System.out.println("[ï¿½ëŒ€ï¿½ì‡±ï¿½ëŒï¿½ëª…ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ê¹ƒë‚¬] : " + user.getPlantName() +" : "+  TextField.getText());
+		System.out.println("[Å¬¶óÀÌ¾ğÆ® ¸Ş½ÃÁö Àü¼Û ¼º°ø] : " + user.getPlantName() +" : "+  TextField.getText());
 		TextField.setText("");
 		TextField.requestFocus();
 		
 	}
 	
-	// ï¿½ï¿½è¸°ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ ï¿½ï¿½ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ¼­¹ö ¸Ş½ÃÁö Àü¼Û ¸Ş¼­µå
 	// send (thread) > thread(serverClient in) > thread(serverClient out) > receive
-	// ï¿½ï¿½ï¿½Î»ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ï§ï¿½ç‘œï¿½ ï¿½ï¿½è¸°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(UTF-8)
+	// ÀÔ·ÂµÈ ¸Ş½ÃÁö¸¦ ¼­¹ö¿¡ Àü´Ş(UTF-8)
 	public void sending(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -508,23 +510,23 @@ public class Controller2 implements Initializable, ControlInterface {
 		thread.start();
 	}
 	
-	//ï¿½ëŒ€ï¿½ì‡±ï¿½ëŒï¿½ëª…ï¿½ï¿½ ï¿½ï¿½æ¿¡ï¿½æ´¹ëªƒï¿½ï¿½ é†«ï¿½çŒ·ï¿½ ï§ï¿½ï¿½ï¿½ï¿½ï¿½
+	//Å¬¶óÀÌ¾ğÆ® ÇÁ·Î±×·¥ Á¾·á ¸Ş¼­µå
 	public void stopClient() {
 		try {
 			if(socket != null && !socket.isClosed()) {
 				socket.close();
-				System.out.println("[ï¿½ëŒ€ï¿½ì‡±ï¿½ëŒï¿½ëª…ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ é†«ï¿½çŒ·ï¿½]");
+				System.out.println("[Å¬¶óÀÌ¾ğÆ® Á¢¼Ó Á¾·á]");
 			}
 		} catch (Exception e) {
-			System.out.println("[ï¿½ëŒ€ï¿½ì‡±ï¿½ëŒï¿½ëª…ï¿½ï¿½ é†«ï¿½çŒ·ï¿½ ï¿½ã…»ï¿½]");
+			System.out.println("[Å¬¶óÀÌ¾ğÆ® Á¾·á ¿À·ù]");
 			e.printStackTrace();
 		}
 		
 		
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½ éºï¿½ï¿½ÑŠï¿½ã…ºë¦° è¸°ï¿½ï¿½ï¿½
-	// ï¿½ï¿½ï¿½â‘¤ï¿½ï¿½ ï¿½Ñ‰Â·ï¿½ëŒï¿½ï¿½ï¿½ï¿½ lbl textç‘œï¿½ set ï¿½ëŒï¿½.
+	// ³¯¾¾ ºÒ·¯¿À±â ¹öÆ°
+	// ³¯¾¾¸¦ Å©·ÑÇØ¿Í¼­ lbl text¸¦ set ÇØÁÜ.
 	public void weatherAction(ActionEvent e) {
 		weatherVO wVO = new weatherVO();
 		try {
@@ -540,5 +542,4 @@ public class Controller2 implements Initializable, ControlInterface {
 
 	}
 
-	
 }

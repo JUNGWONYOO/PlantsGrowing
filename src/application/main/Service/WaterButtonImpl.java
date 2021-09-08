@@ -3,7 +3,7 @@ package application.main.Service;
 import java.sql.SQLException;
 
 import application.Singletone;
-import application.dao.DBConnector;
+import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
 import application.main.Controller.ControlInterface;
@@ -17,7 +17,7 @@ import javafx.util.Duration;
 
 public class WaterButtonImpl extends MainButtonService{
 	
-	DBConnector db = Singletone.getInstance();
+	PlantsGrowingDaoImple db = Singletone.getInstance();
 	
 	@Override
 	public void execute(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller) {
