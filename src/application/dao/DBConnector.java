@@ -54,11 +54,13 @@ public class DBConnector {
 				System.out.println("[중복된 id] 데이터 베이스 check 완료: " + ID);
 				return true;
 			}
-					
+				// 커밋	
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 checkDuplicate 검색 오류 : "  + e.getMessage());
+			// 롤 백
 		}finally {
 			close(conn, rs, st, psmt);
+			// 역순 close
 		}
 		return false;
 	}

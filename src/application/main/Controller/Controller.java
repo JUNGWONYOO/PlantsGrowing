@@ -330,7 +330,6 @@ public class Controller implements Initializable, ControlInterface {
 		btn_helpNxt6.setVisible(false);
 	}
 
-
 	public void playMedia(ActionEvent e) {
 		mP.setVolume(0.1);
 		mP.setOnEndOfMedia(new Runnable() {
