@@ -20,6 +20,7 @@ public class Main extends Application {
 		primaryStage.setScene(new Scene(root));
 		primaryStage.getIcons().add(new Image("file:src/application/main/View/css/menu_plant_icon.png"));
 		primaryStage.show();
+		primaryStage.setResizable(false);
 		primaryStage.setTitle("Plants Growing ·Î±×ÀÎ");
 	}
 	
