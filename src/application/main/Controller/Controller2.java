@@ -304,7 +304,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	}
 	
 	private void executeMainButton(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
-		mainButtonService.executeMainButton(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,1);
+		mainButtonService.executeMainButton(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,2);
 	}
 	
 	public void setInfos() {
