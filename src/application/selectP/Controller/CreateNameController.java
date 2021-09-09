@@ -7,8 +7,7 @@ import java.util.Optional;
 import application.dao.PlantsGrowingDaoImple;
 import application.firstLogin.Controller.LoginController;
 import application.firstLogin.Users.UserInfo;
-import application.main.Controller.Controller;
-import application.main.Controller.Controller2;
+import application.main.Controller.ControlInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,8 +50,7 @@ public class CreateNameController {
 			// DB Ãß°¡
 			user.setPlantName(nameTextField.getText());
 			db.updatePlantName(user);
-			Controller m ;
-			Controller2 n;
+			ControlInterface m ;
 			String pName = user.getPlantName();
 			
 			FXMLLoader loader;
@@ -71,8 +69,8 @@ public class CreateNameController {
 				m.setPname(pName);
 			}
 			if(user.getSpecies() == 2) {
-				n = loader.getController();
-				n.setPname(pName);
+				m = loader.getController();
+				m.setPname(pName);
 			}
 	
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

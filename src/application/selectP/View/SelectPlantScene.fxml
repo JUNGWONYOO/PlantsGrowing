@@ -13,11 +13,11 @@
             <Image url="@image/bg3.png" />
          </image>
       </ImageView>
-      <Button fx:id="ct1" layoutX="161.0" layoutY="505.0" mnemonicParsing="false" onAction="#Alert1" text="Cherry Tomato">
+      <Button fx:id="ct1" layoutX="161.0" layoutY="505.0" mnemonicParsing="false" onAction="#selectCT" text="Cherry Tomato">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font></Button>
-      <Button fx:id="sf1" alignment="CENTER" layoutX="650.0" layoutY="505.0" mnemonicParsing="false" onAction="#Alert2" text="Sunflower">
+      <Button fx:id="sf1" alignment="CENTER" layoutX="650.0" layoutY="505.0" mnemonicParsing="false" onAction="#selectSF" text="Sunflower">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font>

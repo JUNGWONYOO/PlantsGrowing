@@ -14,7 +14,7 @@ public class JdbcTemplate {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/plantgrowing?autoReconnect=true", "root", "1234");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/plantgrowing?autoReconnect=true", "root", "1234");
 			conn.setAutoCommit(false);
 			 
 		} catch (ClassNotFoundException e) {

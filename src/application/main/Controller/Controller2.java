@@ -176,25 +176,18 @@ public class Controller2 implements Initializable, ControlInterface {
 		fadeTransition.setAutoReverse(true);
 		fadeTransition.play();
 	}
-
 	public void helpAction(ActionEvent e) {
-		//helpView.setImage(helpPage1);
+		helpView.setImage(helpPage1);
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.seconds(0.1));
 		slide.setNode(panehelp);
 		slide.setToX(0);
 		slide.play();
-		System.out.println("hello");
 		btn_helpPrev.setVisible(true);
 		btn_helpPrev1.setVisible(false);
-		btn_helpPrev2.setVisible(false);
-		btn_helpPrev3.setVisible(false);
 		btn_helpPrev4.setVisible(false);
 		btn_helpNxt2.setVisible(true);
 		btn_helpNxt3.setVisible(false);
-		btn_helpNxt4.setVisible(false);
-		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 		
 	}
 	
@@ -213,13 +206,9 @@ public class Controller2 implements Initializable, ControlInterface {
 		btn_helpPrev.setVisible(false);
 		btn_helpPrev1.setVisible(true);
 		btn_helpPrev2.setVisible(false);
-		btn_helpPrev3.setVisible(false);
-		btn_helpPrev4.setVisible(false);
 		btn_helpNxt2.setVisible(false);
 		btn_helpNxt3.setVisible(true);
 		btn_helpNxt4.setVisible(false);
-		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 		
 	}
 
@@ -228,23 +217,16 @@ public class Controller2 implements Initializable, ControlInterface {
 		btn_helpPrev1.setVisible(false);
 		btn_helpPrev2.setVisible(true);
 		btn_helpPrev3.setVisible(false);
-		btn_helpPrev4.setVisible(false);
-		btn_helpNxt2.setVisible(false);
 		btn_helpNxt3.setVisible(false);
 		btn_helpNxt4.setVisible(true);
 		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 	}
 
 	public void helpTo4Action(ActionEvent e) {
 		helpView.setImage(helpPage4);
-		btn_helpPrev.setVisible(false);
-		btn_helpPrev1.setVisible(false);
 		btn_helpPrev2.setVisible(false);
 		btn_helpPrev3.setVisible(true);
 		btn_helpPrev4.setVisible(false);
-		btn_helpNxt2.setVisible(false);
-		btn_helpNxt3.setVisible(false);
 		btn_helpNxt4.setVisible(false);
 		btn_helpNxt5.setVisible(true);
 		btn_helpNxt6.setVisible(false);
@@ -252,14 +234,9 @@ public class Controller2 implements Initializable, ControlInterface {
 
 	public void helpTo5Action(ActionEvent e) {
 		helpView.setImage(helpPage5);
-		btn_helpPrev.setVisible(false);
-		btn_helpPrev1.setVisible(false);
-		btn_helpPrev2.setVisible(false);
 		btn_helpPrev3.setVisible(false);
 		btn_helpPrev4.setVisible(true);
 		btn_helpNxt2.setVisible(false);
-		btn_helpNxt3.setVisible(false);
-		btn_helpNxt4.setVisible(false);
 		btn_helpNxt5.setVisible(false);
 		btn_helpNxt6.setVisible(true);
 	}
@@ -278,14 +255,9 @@ public class Controller2 implements Initializable, ControlInterface {
 		helpView.setImage(helpPage1);
 		btn_helpPrev.setVisible(true);
 		btn_helpPrev1.setVisible(false);
-		btn_helpPrev2.setVisible(false);
-		btn_helpPrev3.setVisible(false);
 		btn_helpPrev4.setVisible(false);
 		btn_helpNxt2.setVisible(true);
 		btn_helpNxt3.setVisible(false);
-		btn_helpNxt4.setVisible(false);
-		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 	}
 
 	public void helpTo2Prev(ActionEvent e) {
@@ -293,43 +265,30 @@ public class Controller2 implements Initializable, ControlInterface {
 		btn_helpPrev.setVisible(false);
 		btn_helpPrev1.setVisible(true);
 		btn_helpPrev2.setVisible(false);
-		btn_helpPrev3.setVisible(false);
-		btn_helpPrev4.setVisible(false);
 		btn_helpNxt2.setVisible(false);
 		btn_helpNxt3.setVisible(true);
 		btn_helpNxt4.setVisible(false);
-		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 	}
 
 	public void helpTo3Prev(ActionEvent e) {
 		helpView.setImage(helpPage3);
-		btn_helpPrev.setVisible(false);
 		btn_helpPrev1.setVisible(false);
 		btn_helpPrev2.setVisible(true);
 		btn_helpPrev3.setVisible(false);
-		btn_helpPrev4.setVisible(false);
-		btn_helpNxt2.setVisible(false);
 		btn_helpNxt3.setVisible(false);
 		btn_helpNxt4.setVisible(true);
 		btn_helpNxt5.setVisible(false);
-		btn_helpNxt6.setVisible(false);
 	}
 
 	public void helpTo4Prev(ActionEvent e) {
 		helpView.setImage(helpPage4);
-		btn_helpPrev.setVisible(false);
-		btn_helpPrev1.setVisible(false);
 		btn_helpPrev2.setVisible(false);
 		btn_helpPrev3.setVisible(true);
 		btn_helpPrev4.setVisible(false);
-		btn_helpNxt2.setVisible(false);
-		btn_helpNxt3.setVisible(false);
 		btn_helpNxt4.setVisible(false);
 		btn_helpNxt5.setVisible(true);
 		btn_helpNxt6.setVisible(false);
 	}
-
 	public void playMedia(ActionEvent e) {
 		mP.setVolume(0.1);
 		mP.setOnEndOfMedia(new Runnable() {
@@ -344,8 +303,8 @@ public class Controller2 implements Initializable, ControlInterface {
 		mP.pause();
 	}
 	
-	private void execute(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
-		mainButtonService.execute(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,1);
+	private void executeMainButton(MainButtonService mainButtonService, ImageView imageView1, ImageView imageView2) {
+		mainButtonService.executeMainButton(loveCount, lightCount, waterCount, snailCount, level, imageView1, imageView2, myPlantView,1);
 	}
 	
 	public void setInfos() {
@@ -366,7 +325,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	public void waterAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		waterCount++;
-		execute(new WaterButtonImpl(), waterEffect, chatBubbleView);
+		executeMainButton(new WaterButtonImpl(), waterEffect, chatBubbleView);
 		setInfos();
 
 	}
@@ -375,7 +334,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	public void lightAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		lightCount++;
-		execute(new LightButtonImpl(), lightEffect, chatBubbleView);
+		executeMainButton(new LightButtonImpl(), lightEffect, chatBubbleView);
 		setInfos();
 		
 		
@@ -384,7 +343,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	public void loveAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		loveCount++;
-		execute(new LoveButtonImpl(), loveEffect, chatBubbleView);
+		executeMainButton(new LoveButtonImpl(), loveEffect, chatBubbleView);
 		setInfos();
 		
 	}
@@ -392,7 +351,7 @@ public class Controller2 implements Initializable, ControlInterface {
 	public void snailAction(ActionEvent e) throws SQLException {
 		audioClipping();
 		snailCount++;
-		execute(new SnailButtonImpl(), snailEffect, chatBubbleView);
+		executeMainButton(new SnailButtonImpl(), snailEffect, chatBubbleView);
 		setInfos();
 		
 	}

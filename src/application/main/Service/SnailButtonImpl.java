@@ -19,7 +19,7 @@ public class SnailButtonImpl extends MainButtonService{
 	
 	// 총 실행 메서드
 	@Override
-	public void execute(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller) {
+	public void executeMainButton(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller) {
 		
 		imageView1.setImage(snailEffect1); // 이미지 뷰 개별화
 		

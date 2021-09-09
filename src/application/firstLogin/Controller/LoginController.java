@@ -2,8 +2,10 @@ package application.firstLogin.Controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URL;
 import java.nio.channels.SeekableByteChannel;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.security.auth.login.AppConfigurationEntry;
@@ -17,9 +19,11 @@ import application.firstLogin.Users.UserInfo;
 import application.main.Controller.ControlInterface;
 import application.main.Controller.Controller;
 import application.main.Controller.Controller2;
+import common.JdbcTemplate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -50,15 +54,15 @@ public class LoginController {
 	// UserList 벡터에 보관하면서 , 매 컨트롤러에서 같은 유저를 불러올 수 있게끔 선언
 	public static Vector<UserInfo> UserList = new Vector<UserInfo>();
 	
-	private void execute(LoginService loginService) {
-		loginService.execute(userNameTextField, btn, enterPasswordField, tfd_create_ID, tfd_createPw, tfd_createPw2);
+	private void executeMemberAccess(LoginService loginService) {
+		loginService.executeMemberAccess(userNameTextField, btn, enterPasswordField, tfd_create_ID, tfd_createPw, tfd_createPw2);
 	}
 	
 	// 로그인 기능 (DB의 회원가입 정보를 가져올 수 있음)
 	public void Login(ActionEvent ae) throws IOException, SQLException {
 		
 		if(db.check(userNameTextField.getText(), enterPasswordField.getText())) {		
-			execute(new LoginImpl());
+			executeMemberAccess(new LoginImpl());
 			
 		}else {		
 			Alert alert = new Alert(AlertType.ERROR);
@@ -88,7 +92,7 @@ public class LoginController {
 		
 		
 		if(tfd_createPw.getText().equals(tfd_createPw2.getText()) && tfd_create_ID.getText().length() > 4 && !db.checkDuplicate(tfd_create_ID.getText())) { //회원가입 조건
-			execute(new CreateIdImpl());
+			executeMemberAccess(new CreateIdImpl());
 		
 		}
 		else {
@@ -118,5 +122,6 @@ public class LoginController {
 		}
 
 	}
+
 	
 }

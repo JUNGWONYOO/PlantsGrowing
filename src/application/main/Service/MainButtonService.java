@@ -24,7 +24,7 @@ public abstract class MainButtonService {
 	PlantsGrowingDaoImple db = Singletone.getInstance();
 	
 	// 버튼 클릭 시 실행 메서드
-	public abstract void execute(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller);
+	public abstract void executeMainButton(int loveCount, int lightCount, int waterCount, int snailCount, int level, ImageView imageView1, ImageView imageView2, ImageView plantView, int controller);
 	
 	// 레벨 올라가는 조건
 	public abstract void leveling(int loveCount, int lightCount, int waterCount, int snailCount, int level,ImageView myPlantView, int controller);

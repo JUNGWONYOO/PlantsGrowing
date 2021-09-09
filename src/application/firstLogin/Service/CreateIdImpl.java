@@ -21,7 +21,7 @@ public class CreateIdImpl implements LoginService {
 	
 	// 회원가입
 	@Override
-	public void execute(TextField userNameTextField, Button btn, PasswordField enterPasswordField,
+	public void executeMemberAccess(TextField userNameTextField, Button btn, PasswordField enterPasswordField,
 						TextField tfd_create_ID, PasswordField tfd_createPw, PasswordField tfd_createPw2) {
 		
 		try {
