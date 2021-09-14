@@ -1,11 +1,13 @@
 # PlantsGrowing
 created by Jinhee Lee, Junglim You, Euijung Park, Jaehun Choi
+
 *Language is set to Korean. No other language is and/or will be supported.
 
 PlantsGrowing is a healing game with various features. Stay tuned for the upcoming updates.
 We live in Covid Period, where our social activity is limited to our households. To those, who have not many family memebers, the period could mean
 the total disconnection from any social interaction. PlantsGrowiong presents you an undying plant friend, whom you can foster, with a soothing background music.
 There are total of three levels. Clearing will take only a few minutes of your time.
+
 *This game was made for the educational purpose and educational purpose only.
 
 # Basic Features
@@ -27,9 +29,13 @@ Try growing plants to the final level and find your happy ending.
 
 # Prerequisites 
 Four jars are required to enjoy the game.
+
 AnimateFX-1.2.1
+
 jsoup-1.14.1
+
 mysql-connector-java-8.0.26
+
 ojdbc8
 
 
